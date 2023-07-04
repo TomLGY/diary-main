@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+        <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>4-Wenet模型结构 &mdash; SphinxDiary v1.0 文档</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/dist/fontawesome.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/dist/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+            <link rel="index" title="索引" href="../../../genindex.html" />
+            <link rel="search" title="搜索" href="../../../search.html" />
+            <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="up" title="Wenet" href="../2-index.html" />
+            <link rel="next" title="5-WeNet实验小结" href="5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html" />
+            <link rel="prev" title="3-WeNet-LM模型" href="3-WeNet-LM%E6%A8%A1%E5%9E%8B.html" />
+    </head>
+<body>
+    <script type="text/javascript" src="../../../_static/dist/blocking.js"></script>
+    <header class="container-fluid bg-primary">
+        <a class="btn btn-sm btn-light skip-to-content-link" href="#main">Skip to content</a>
+        <div class="container-fluid">
+            <div class="navbar navbar-expand-lg navbar-dark font-weight-bold">
+                    <a href="../../../index.html"
+                        title="Wagtail"
+                        class="logo navbar-brand"
+                    >
+                        <img src="../../../_static/img/wagtail-logo-new.svg" width="45" height="59" alt="Wagtail"
+                            class="logo-img"
+                        />
+                        Sphinx Wagtail Theme
+                    </a>
+                
+                
+                <button class="navbar-toggler btn btn-primary d-lg-none" type="button" data-toggle="collapse" data-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="sr-only">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-12 col-lg-3 sidebar-container">
+                <div id="collapseSidebar" class="collapse sticky-top d-lg-block pt-5 pr-lg-4">
+<div id="searchbox" class="searchbox mb-6 px-1" role="search">
+    <form id="search-form" action="../../../search.html" autocomplete="off" method="get" role="search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text border-right-0 bg-white py-3 pl-3 pr-2"><span class="fas fa-search"></span></div>
+            </div>
+            <input class="form-control py-3 pr-3 pl-1 h-100 border-left-0" type="search" name="q" placeholder="Search documentation" aria-label="Search documentation" id="searchinput" />
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div><div class="site-toc">
+    <nav class="toc mt-3" aria-label="Main menu">
+        <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/1-index.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/03Docker%E5%AE%B9%E5%99%A8%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB.html">Docker容器备份与迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/2-index.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/01%E5%9C%A8Ubuntu18.04%E4%B8%8A%E6%90%AD%E5%BB%BAkubernetes.html">kubernetes安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/02%E4%BD%BF%E7%94%A8MIG%E5%92%8CKubernetes%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2NVIDIA%20Triton.html">Kubernetes部署NVIDIA Triton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/03%E4%BD%BF%E7%94%A8Kubernetes%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4.html">Kubernetes创建集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/04Triton%20Metrics.html">Triton Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/05Grafana.html">Grafana</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/3-index.html">Triton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/01Triton_Inference_Server%E5%85%A5%E9%97%A8.html">Triton Inference Server入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/02Triton%E5%85%A5%E9%97%A8%E7%BA%A7%E6%95%99%E7%A8%8B.html">Triton入门级教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/03Triton_Backend%E8%AF%A6%E8%A7%A3.html">Triton_Backend详解</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/4-index.html">Pytorch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/04Pytorch/01%E6%95%B0%E6%8D%AE%E9%9B%86.html">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/5-index.html">语音识别环境部署教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/01jetpack5.0.2%E5%AE%89%E8%A3%85.html">Jetpack 5.0.2安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html">深度学习环境配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/03%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2.html">语音识别模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html">客户端模型推理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/05%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.html">性能测试</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/6-index.html">小工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/01Git.html">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/2-index.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/01GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（一）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/02GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（二）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/03Markdown.html">Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/04MyST-Parser.html">MyST-Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/03Fastertransformer.html">Fastertransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/04FileBrowser.html">FileBrowser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/05NFS%E9%85%8D%E7%BD%AE.html">NFS配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/06%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">服务器文件管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/07StableDiffusion.html">Stable Diffusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/7-index.html">NNI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/01-NNI%E7%A4%BA%E4%BE%8B.html">NNI 示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/02-NNI%E9%83%A8%E7%BD%B2.html">NNI 部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/8-index.html">Android</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/08Android/01Android%20APK.html">Android APK</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">论文:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../1-index.html">Fine tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/01Prompt%20Tuning.html">Prompt Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/02Prompt%20Tuning%20v2.html">Prompt Tuning V2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/03Lora.html">LoRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/04ChatGLM%E5%BE%AE%E8%B0%83%E5%AE%9E%E9%AA%8C.html">ChatGLM微调实验</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../2-index.html">语音识别</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1-index.html">语音识别综述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/1-Recent%20Advance%20in%20End-to-End%20Automatic%20Speech%20Recognition.html">1-Recent Advance in End-to-End Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/2-A%20Comparative%20Study%20On%20Transformer%20VS%20RNN%20In%20Speech%20Applications.html">2-A Comparative Study On Transformer VS RNN In Speech Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../2-index.html">Wenet</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1-WeNet%20Production%20Oriented%20Streaming%20and%20Non-Streaming%20End-to-End%20Speech%20Recognition%20Toolkit.html">1-WeNet Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-WeNet2.0%20More%20Productive%20End-to-End%20Speech%20Recognition%20Toolkit.html">2-Wenet2.0 More Productive End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-WeNet-LM%E6%A8%A1%E5%9E%8B.html">3-WeNet-LM模型</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4-Wenet模型结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html">5-WeNet实验小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6-WeNet%E9%83%A8%E7%BD%B2.html">6-WeNet部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-index.html">模型微调</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/1-FINE-TUNING%20OF%20PRE-TRAINED%20END-TO-END%20SPEECH%20RECOGNITION%20WITH%20GENERATIVE%20ADVERSARIAL%20NETWORKS.html">1-Fine-Tuning Of Pre-trained end-to-end Speech Recognition With Generative Adversarial Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4-index.html">编码器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/1-Conformer-Convolution-augmented%20Transformer%20for%20Speech%20Recognition.html">1-Conformer-Convolution-augmented Transformer for Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/2-Paraformer-Fast%20and%20Accurate%20Parallel%20Transformer%20for%20Non-autoregressive.html">2-Paraformer-Fast and Accurate Parallel Transformer for Non-autoregressive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html">3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/4-Squeezeformer-An%20Efficient%20Transformer%20for%20Automatic%20Speech%20Recognition.html">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../3-index.html">联邦学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/1-index.html">联邦学习项目</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/01%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/1-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">联邦学习开源项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../4-index.html">语言模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/1-Transformer-XL-Attention%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.html">1-Transformer-XL-Attention Language Models Beyond a Fixed-Length Context</a></li>
+</ul>
+</li>
+</ul>
+
+    </nav>
+    <template data-toggle-item-template>
+        <button class="btn btn-sm btn-link toctree-expand" type="button">
+            <span class="sr-only">Toggle menu contents</span>
+        </button>
+    </template>
+</div>
+                    <div class="d-lg-none border-bottom">
+                        
+                    </div>
+                </div>
+            </aside>
+            <div class="col-12 col-lg-9 pt-5">
+                <header class="row align-items-baseline">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-0 p-0 bg-transparent">
+        <li class="breadcrumb-item"><a href="../../../index.html">Docs</a></li>
+            <li class="breadcrumb-item"><a href="../../2-index.html">语音识别</a></li>
+            <li class="breadcrumb-item"><a href="../2-index.html">Wenet</a></li>
+        <li class="breadcrumb-item active" aria-current="page">4-Wenet模型结构</li>
+    </ol>
+</nav>
+                    </div>
+                    <div class="col-sm-12 col-lg-auto mt-3 mt-lg-3">
+                        <noscript>
+                            <p>JavaScript is required to toggle light/dark mode..</p>
+                        </noscript>
+                        <button id="wagtail-theme" class="btn btn-sm btn-light text-decoration-none" type="button">
+                            <span class="dark-only"><i class="fas fa-sun"></i> Light mode</span>
+                            <span class="light-only"><i class="fas fa-moon"></i> Dark mode</span>
+                        </button>
+    <a class="btn btn-sm btn-light text-decoration-none" href="https://github.com/wagtail/sphinx_wagtail_theme/blob/main/docs/论文/02语音识别/02Wenet/4-WeNet模型结构.md" rel="nofollow">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
+    <a class="btn btn-sm btn-light text-decoration-none" href="../../../_sources/论文/02语音识别/02Wenet/4-WeNet模型结构.md.txt" rel="nofollow">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+                        
+                    </div>
+                </header>
+                <div class="row" >
+                    <div class="col-12">
+                        <hr class="w-100 my-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
+                        <main role="main" id="main">
+    <section class="tex2jax_ignore mathjax_ignore" id="wenet">
+<h1>4-Wenet模型结构<a class="headerlink" href="#wenet" title="此标题的永久链接">¶</a></h1>
+<section id="asr">
+<h2>1、ASR 模型<a class="headerlink" href="#asr" title="此标题的永久链接">¶</a></h2>
+<p>模型目录位于<code class="docutils literal notranslate"><span class="pre">wenet/transformer/asr_model.py--&gt;ASRModel(torch.nn.Module)</span></code>：</p>
+<p>编码器部分：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">encoder_out</span><span class="p">,</span> <span class="n">encoder_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">speech</span><span class="p">,</span> <span class="n">speech_lengths</span><span class="p">)</span>
+<span class="n">encoder_out_lens</span> <span class="o">=</span> <span class="n">encoder_mask</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>CTC 和注意力损失结合：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss_att</span><span class="p">,</span> <span class="n">acc_att</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_att_loss</span><span class="p">(</span><span class="n">encoder_out</span><span class="p">,</span> <span class="n">encoder_mask</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text_lengths</span><span class="p">)</span>
+<span class="n">loss_ctc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctc</span><span class="p">(</span><span class="n">encoder_out</span><span class="p">,</span> <span class="n">encoder_out_lens</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text_lengths</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctc_weight</span> <span class="o">*</span> <span class="n">loss_ctc</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctc_weight</span><span class="p">)</span> <span class="o">*</span> <span class="n">loss_att</span>
+</pre></div>
+</div>
+<p>计算注意力损失的代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_calc_att_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoder_out</span><span class="p">,</span> <span class="n">encoder_mask</span><span class="p">,</span> <span class="n">ys_pad</span><span class="p">,</span> <span class="n">ys_pad_lens</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="n">ys_in_pad</span><span class="p">,</span> <span class="n">ys_out_pad</span> <span class="o">=</span> <span class="n">add_sos_eos</span><span class="p">(</span><span class="n">ys_pad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span><span class="p">)</span>
+    <span class="n">ys_in_lens</span> <span class="o">=</span> <span class="n">ys_pad_lens</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># 翻转 seq，用于右到左解码</span>
+    <span class="n">r_ys_pad</span> <span class="o">=</span> <span class="n">reverse_pad_list</span><span class="p">(</span><span class="n">ys_pad</span><span class="p">,</span> <span class="n">ys_pad_lens</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span><span class="p">))</span>
+    <span class="n">r_ys_in_pad</span><span class="p">,</span> <span class="n">r_ys_out_pad</span> <span class="o">=</span> <span class="n">add_sos_eos</span><span class="p">(</span><span class="n">r_ys_pad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eos</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span><span class="p">)</span>
+    <span class="c1"># 1. 前向解码</span>
+    <span class="n">decoder_out</span><span class="p">,</span> <span class="n">r_decoder_out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">encoder_out</span><span class="p">,</span> <span class="n">encoder_mask</span><span class="p">,</span>
+                                                 <span class="n">ys_in_pad</span><span class="p">,</span> <span class="n">ys_in_lens</span><span class="p">,</span>
+                                                 <span class="n">r_ys_in_pad</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">reverse_weight</span><span class="p">)</span>
+    <span class="c1"># 2. 计算注意力损失</span>
+    <span class="n">loss_att</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion_att</span><span class="p">(</span><span class="n">decoder_out</span><span class="p">,</span> <span class="n">ys_out_pad</span><span class="p">)</span>
+    <span class="n">r_loss_att</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="c1"># 如果有右到左的注意力</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_weight</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">r_loss_att</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion_att</span><span class="p">(</span><span class="n">r_decoder_out</span><span class="p">,</span> <span class="n">r_ys_out_pad</span><span class="p">)</span>
+        <span class="n">loss_att</span> <span class="o">=</span> <span class="n">loss_att</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_weight</span><span class="p">)</span> <span class="o">+</span> <span class="n">r_loss_att</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_weight</span>
+        <span class="n">acc_att</span> <span class="o">=</span> <span class="n">th_accuracy</span><span class="p">(</span>
+            <span class="n">decoder_out</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">),</span>
+            <span class="n">ys_out_pad</span><span class="p">,</span>
+            <span class="n">ignore_label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span><span class="p">,</span>
+        <span class="p">)</span>
+<span class="k">return</span> <span class="n">loss_att</span><span class="p">,</span> <span class="n">acc_att</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2>2、损失<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h2>
+<section id="ctc">
+<h3>2.1 CTC 损失<a class="headerlink" href="#ctc" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于<code class="docutils literal notranslate"><span class="pre">wenet/transformer/ctc.py--&gt;CTC(torch.nn.Module)</span></code>：</p>
+<p>模型结构</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">ctc</span><span class="p">):</span> <span class="n">CTC</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">ctc_lo</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">7029</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">ctc_loss</span><span class="p">):</span> <span class="n">CTCLoss</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class CTC(torch.nn.Module)    </span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">odim</span><span class="p">,</span> <span class="n">encoder_output_size</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="n">reduce</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    	构建 CTC 模块</span>
+<span class="sd">    	odim：输出维度</span>
+<span class="sd">    	encoder_output_size：编码器投影单元的数目</span>
+<span class="sd">    	reduce：bool 类型，返回 CTC loss 到标量</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="n">eprojs</span> <span class="o">=</span> <span class="n">encoder_output_size</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dropout_rate</span> <span class="o">=</span> <span class="n">dropout_rate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ctc_lo</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">eprojs</span><span class="p">,</span> <span class="n">odim</span><span class="p">)</span>
+    <span class="n">reduction_type</span> <span class="o">=</span> <span class="s2">&quot;sum&quot;</span> <span class="k">if</span> <span class="n">reduce</span> <span class="k">else</span> <span class="s2">&quot;none&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ctc_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CTCLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="n">reduction_type</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hs_pad</span><span class="p">,</span> <span class="n">hlens</span><span class="p">,</span> <span class="n">ys_pad</span><span class="p">,</span> <span class="n">ys_lens</span><span class="p">):</span>
+    <span class="c1"># hs_pad: (B, L, NProj) -&gt; ys_hat: (B, L, Nvocab)</span>
+    <span class="n">ys_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctc_lo</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">hs_pad</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout_rate</span><span class="p">))</span>
+    <span class="c1"># ys_hat: (B, L, D) -&gt; (L, B, D)</span>
+    <span class="n">ys_hat</span> <span class="o">=</span> <span class="n">ys_hat</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ys_hat</span> <span class="o">=</span> <span class="n">ys_hat</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctc_loss</span><span class="p">(</span><span class="n">ys_hat</span><span class="p">,</span> <span class="n">ys_pad</span><span class="p">,</span> <span class="n">hlens</span><span class="p">,</span> <span class="n">ys_lens</span><span class="p">)</span>
+    <span class="c1"># Batch-size average</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">ys_hat</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span>
+
+
+<span class="k">def</span> <span class="nf">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hs_pad</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctc_lo</span><span class="p">(</span><span class="n">hs_pad</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hs_pad</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctc_lo</span><span class="p">(</span><span class="n">hs_pad</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>2.2 注意力损失<a class="headerlink" href="#id2" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于<code class="docutils literal notranslate"><span class="pre">wenet/transformer/label_smoothing_loss.py--&gt;LabelSmoothingLoss(torch.nn.Module)</span></code>。关于 Label-smoothing loss 可以参考 [5.7 LabelSmoothingLoss](##5.7 LabelSmoothingLoss)。</p>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">criterion_att</span><span class="p">):</span> <span class="n">LabelSmoothingLoss</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">criterion</span><span class="p">):</span> <span class="n">KLDivLoss</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class LabelSmoothingLoss(torch.nn.Module)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">padding_idx</span><span class="p">,</span> <span class="n">smoothing</span><span class="p">,</span> <span class="n">normalize_length</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">LabelSmoothingLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">KLDivLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span> <span class="o">=</span> <span class="n">padding_idx</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">smoothing</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">smoothing</span> <span class="o">=</span> <span class="n">smoothing</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">normalize_length</span> <span class="o">=</span> <span class="n">normalize_length</span>
+
+
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="c1"># 计算模型输出和目标标签之间的损失</span>
+    <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># 使用 zeros_like 替代 no_grad()</span>
+    <span class="n">true_dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">true_dist</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">smoothing</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ignore</span> <span class="o">=</span> <span class="n">target</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">-</span> <span class="n">ignore</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">masked_fill</span><span class="p">(</span><span class="n">ignore</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">true_dist</span><span class="o">.</span><span class="n">scatter_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span><span class="p">)</span>
+    <span class="n">kl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">true_dist</span><span class="p">)</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">total</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_length</span> <span class="k">else</span> <span class="n">batch_size</span>
+    <span class="k">return</span> <span class="n">kl</span><span class="o">.</span><span class="n">masked_fill</span><span class="p">(</span><span class="n">ignore</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">denom</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>3、编码器模块实现<a class="headerlink" href="#id3" title="此标题的永久链接">¶</a></h2>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/encoder.py--&gt;ConformerEncoder(BaseEncoder)</span></code>，继承了 <code class="docutils literal notranslate"><span class="pre">BaseEncoder</span></code> 的方法：</p>
+<section id="id4">
+<h3>3.1 全局归一化<a class="headerlink" href="#id4" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">global_cmvn</span><span class="p">):</span> <span class="n">GlobalCMVN</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># global_cmvn (Optional[torch.nn.Module]): Optional GlobalCMVN module</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">global_cmvn</span> <span class="o">=</span> <span class="n">global_cmvn</span>
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">global_cmvn</span></code> 可参考 [CMVN实现](##5.6 CMVN)</p>
+<blockquote>
+<div><p>CMVN：倒谱均值方差归一化，提取声学特征后，使得另一个空间下参数符合某种概率分布，压缩特征参数值域的范围，减小训练和测试环境的不匹配，是一种提升模型鲁棒性的归一化操作。</p>
+</div></blockquote>
+</section>
+<section id="id5">
+<h3>3.2 编码器嵌入编码<a class="headerlink" href="#id5" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">embed</span><span class="p">):</span> <span class="n">Conv2dSubsampling4</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">conv</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">):</span> <span class="n">ReLU</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">4864</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">pos_enc</span><span class="p">):</span> <span class="n">RelPositionalEncoding</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">embed</span> <span class="o">=</span> <span class="n">subsampling_class</span><span class="p">(</span>
+    <span class="n">input_size</span><span class="p">,</span>
+    <span class="n">output_size</span><span class="p">,</span>
+    <span class="n">dropout_rate</span><span class="p">,</span>
+    <span class="n">pos_enc_class</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">positional_dropout_rate</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">pos_enc_class</span></code> 默认为相对位置编码，相对位置编码实现可参考[RelPositionalEncoding](###5.2 位置编码)。</p>
+</section>
+<section id="id6">
+<h3>3.3 层归一化<a class="headerlink" href="#id6" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">after_norm</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize_before: True 表示在一层的每个子块前进行layerNorm，False 表示在一层的每个子块后进行LayerNorm，默认为True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">normalize_before</span> <span class="o">=</span> <span class="n">normalize_before</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">after_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="conformer">
+<h3>3.4 Conformer 编码器层<a class="headerlink" href="#conformer" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">encoders</span><span class="p">):</span> <span class="n">ModuleList</span><span class="p">(</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">ConformerEncoderLayer</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">self_attn</span><span class="p">):</span> <span class="n">RelPositionMultiHeadedAttention</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">linear_q</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">linear_k</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">linear_v</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">linear_out</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">linear_pos</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+		<span class="p">)</span>
+        <span class="p">(</span><span class="n">feed_forward</span><span class="p">):</span> <span class="n">PositionwiseFeedForward</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">w_1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">SiLU</span><span class="p">()</span>
+            <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">w_2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="p">)</span>
+        <span class="p">(</span><span class="n">feed_forward_macaron</span><span class="p">):</span> <span class="n">PositionwiseFeedForward</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">w_1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">SiLU</span><span class="p">()</span>
+            <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">w_2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="p">)</span>
+        <span class="p">(</span><span class="n">conv_module</span><span class="p">):</span> <span class="n">ConvolutionModule</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">pointwise_conv1</span><span class="p">):</span> <span class="n">Conv1d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+            <span class="p">(</span><span class="n">depthwise_conv</span><span class="p">):</span> <span class="n">Conv1d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">groups</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">norm</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">pointwise_conv2</span><span class="p">):</span> <span class="n">Conv1d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+            <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">SiLU</span><span class="p">()</span>
+		<span class="p">)</span>
+        <span class="p">(</span><span class="n">norm_ff</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">norm_mha</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">norm_ff_macaron</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">norm_conv</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">norm_final</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># num_blocks：编码器块的数目，默认为6层编码器</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">encoders</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span>
+    <span class="n">ConformerEncoderLayer</span><span class="p">(</span>
+    <span class="n">output_size</span><span class="p">,</span>
+    <span class="n">encoder_selfattn_layer</span><span class="p">(</span><span class="o">*</span><span class="n">encoder_selfattn_layer_args</span><span class="p">),</span>
+    <span class="n">positionwise_layer</span><span class="p">(</span><span class="o">*</span><span class="n">positionwise_layer_args</span><span class="p">),</span>
+    <span class="n">positionwise_layer</span><span class="p">(</span><span class="o">*</span><span class="n">positionwise_layer_args</span><span class="p">)</span> <span class="k">if</span> <span class="n">macaron_style</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">convolution_layer</span><span class="p">(</span><span class="o">*</span><span class="n">convolution_layer_args</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_cnn_module</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dropout_rate</span><span class="p">,</span>
+    <span class="n">normalize_before</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_blocks</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>其中</p>
+<p><code class="docutils literal notranslate"><span class="pre">encoder_selfattn_layer</span></code> 使用相对多头自注意力层 [RelPositionMultiHeadedAttention](##5.3 多头自注意力)</p>
+<p><code class="docutils literal notranslate"><span class="pre">positionwise_layer</span></code> 使用逐位前馈网络 [PositionwiseFeedForward](##5.4 前馈网络)</p>
+<p><code class="docutils literal notranslate"><span class="pre">convolution_layer</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">macaron</span> <span class="pre">style</span></code> 的卷积网络 [ConvolutionModule](##5.5 卷积模块)</p>
+</section>
+</section>
+<section id="id7">
+<h2>4、解码器模块实现<a class="headerlink" href="#id7" title="此标题的永久链接">¶</a></h2>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/decoder.py--&gt;TransformerDecoder</span></code></p>
+<section id="id8">
+<h3>4.1 解码器嵌入编码<a class="headerlink" href="#id8" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">embed</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+	<span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Embedding</span><span class="p">(</span><span class="mi">7029</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+	<span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="n">PositionalEncoding</span><span class="p">(</span>
+	<span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">embed</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">attention_dim</span><span class="p">),</span>
+    <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">attention_dim</span><span class="p">,</span> <span class="n">positional_dropout_rate</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>其中由 Embedding 模块和 PositionEncoding 两个模块组成，位置编码参考编码器中[位置编码](###5.2 位置编码)实现。</p>
+</section>
+<section id="id9">
+<h3>4.2 层归一化<a class="headerlink" href="#id9" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">after_norm</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize_before: </span>
+<span class="c1">#	True 表示在一层的每个子块前进行layerNorm，False 表示在一层的每个子块后进行LayerNorm，默认为True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">normalize_before</span> <span class="o">=</span> <span class="n">normalize_before</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">after_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">attention_dim</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>4.3 层输出<a class="headerlink" href="#id10" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">output_layer</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">7029</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># use_output_layer: 是否使用输出层</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">use_output_layer</span> <span class="o">=</span> <span class="n">use_output_layer</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">attention_dim</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>4.4 注意力解码器<a class="headerlink" href="#id11" title="此标题的永久链接">¶</a></h3>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="p">(</span><span class="n">decoders</span><span class="p">):</span> <span class="n">ModuleList</span><span class="p">(</span>
+     <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">DecoderLayer</span><span class="p">(</span>
+     <span class="p">(</span><span class="n">self_attn</span><span class="p">):</span> <span class="n">MultiHeadedAttention</span><span class="p">(</span>
+         <span class="p">(</span><span class="n">linear_q</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">linear_k</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">linear_v</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">linear_out</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+     <span class="p">)</span>
+     <span class="p">(</span><span class="n">src_attn</span><span class="p">):</span> <span class="n">MultiHeadedAttention</span><span class="p">(</span>
+         <span class="p">(</span><span class="n">linear_q</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">linear_k</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">linear_v</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">linear_out</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+     <span class="p">)</span>
+     <span class="p">(</span><span class="n">feed_forward</span><span class="p">):</span> <span class="n">PositionwiseFeedForward</span><span class="p">(</span>
+         <span class="p">(</span><span class="n">w_1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">ReLU</span><span class="p">()</span>
+         <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+         <span class="p">(</span><span class="n">w_2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+     <span class="p">)</span>
+     <span class="p">(</span><span class="n">norm1</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">norm2</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">norm3</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># num_blocks：解码器块的数目，默认为6层解码器</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">=</span> <span class="n">num_blocks</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">decoders</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span>
+    <span class="n">DecoderLayer</span><span class="p">(</span>
+        <span class="n">attention_dim</span><span class="p">,</span>
+        <span class="n">MultiHeadedAttention</span><span class="p">(</span><span class="n">attention_heads</span><span class="p">,</span> <span class="n">attention_dim</span><span class="p">,</span><span class="n">self_attention_dropout_rate</span><span class="p">),</span>
+        <span class="n">MultiHeadedAttention</span><span class="p">(</span><span class="n">attention_heads</span><span class="p">,</span> <span class="n">attention_dim</span><span class="p">,</span> <span class="n">src_attention_dropout_rate</span><span class="p">)</span> <span class="k">if</span> <span class="n">src_attention</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">PositionwiseFeedForward</span><span class="p">(</span><span class="n">attention_dim</span><span class="p">,</span> <span class="n">linear_units</span><span class="p">,</span><span class="n">dropout_rate</span><span class="p">),</span>
+        <span class="n">dropout_rate</span><span class="p">,</span>
+        <span class="n">normalize_before</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id12">
+<h2>5、子模块实现<a class="headerlink" href="#id12" title="此标题的永久链接">¶</a></h2>
+<section id="id13">
+<h3>5.1 卷积子采样<a class="headerlink" href="#id13" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/subsampling--&gt;Conv2dSubsampling4(BaseSubsampling)</span></code></p>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="p">(</span><span class="n">embed</span><span class="p">):</span> <span class="n">Conv2dSubsampling4</span><span class="p">(</span>
+      <span class="p">(</span><span class="n">conv</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">):</span> <span class="n">ReLU</span><span class="p">()</span>
+      <span class="p">)</span>
+      <span class="p">(</span><span class="n">out</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">4864</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="p">)</span>
+      <span class="p">(</span><span class="n">pos_enc</span><span class="p">):</span> <span class="n">RelPositionalEncoding</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idim</span><span class="p">,</span> <span class="n">odim</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span><span class="n">pos_enc_class</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">odim</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">odim</span><span class="p">,</span> <span class="n">odim</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">odim</span> <span class="o">*</span> <span class="p">(((</span><span class="n">idim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">),</span> <span class="n">odim</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pos_enc</span> <span class="o">=</span> <span class="n">pos_enc_class</span>
+
+    
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_mask</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 升维</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="n">f</span><span class="p">))</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_enc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>	<span class="c1"># pos_enc_class = RelPositionalEncoding</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">pos_emb</span><span class="p">,</span> <span class="n">x_mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">][:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3>5.2 位置编码<a class="headerlink" href="#id14" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/embedding--&gt;RelPositionalEncoding(PositionalEncoding)</span></code>,用于实现（相对）位置编码：</p>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># position_encoding 方法，对绝对位置引入偏置进行编码</span>
+<span class="k">def</span> <span class="nf">position_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">apply_dropout</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span>
+        <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="n">offset</span><span class="p">:</span><span class="n">offset</span> <span class="o">+</span> <span class="n">size</span><span class="p">]</span>
+	<span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="ow">and</span> <span class="n">offset</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># scalar</span>
+        <span class="k">assert</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span>
+        <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="n">offset</span><span class="p">:</span><span class="n">offset</span> <span class="o">+</span> <span class="n">size</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># GPU上的流式解码</span>
+        <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="n">flag</span>
+        <span class="n">pos_emb</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># B X T X d_model</span>
+    <span class="k">if</span> <span class="n">apply_dropout</span><span class="p">:</span>
+        <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">pos_emb</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pos_emb</span>
+
+
+<span class="c1"># 位置编码模块</span>
+<span class="c1"># Class: PositonalEncoding(torch.nn.Moudule)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">reverse</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">xscale</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="n">max_len</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">)</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">div_term</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">*</span> 
+            <span class="o">-</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10000.0</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">))</span>
+    <span class="c1"># 正弦位置核心</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">div_term</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">div_term</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="c1"># 调用 position_encoding 方法</span>
+    <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_encoding</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">xscale</span> <span class="o">+</span> <span class="n">pos_emb</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">pos_emb</span><span class="p">)</span>
+
+
+<span class="c1"># 相对位置编码模块，继承了位置编码模块</span>
+<span class="c1"># Class: RelPositionalEncoding(PositionalEncoding)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="n">max_len</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">xscale</span>
+    <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_encoding</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">pos_emb</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h3>5.3 多头自注意力<a class="headerlink" href="#id15" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/attention.py--&gt;RelPositionMultiHeadedAttention(MultiHeadedAttention)</span></code></p>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">self_attn</span><span class="p">):</span> <span class="n">RelPositionMultiHeadedAttention</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">linear_q</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">linear_k</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">linear_v</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">linear_out</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">linear_pos</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 多头注意力模块</span>
+<span class="c1"># Class: MultiHeadedAttention(nn.Module)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_head</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="c1"># 构建多头注意力对象</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">n_feat</span> <span class="o">%</span> <span class="n">n_head</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="c1"># We assume d_v always equals d_k</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">n_feat</span> <span class="o">//</span> <span class="n">n_head</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">n_head</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">linear_q</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_feat</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">linear_k</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_feat</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">linear_v</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_feat</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">linear_out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_feat</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">forward_qkv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryr</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">n_batch</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_q</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_k</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">)</span>  
+    <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_v</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, head, time1, d_k)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, head, time2, d_k)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, head, time2, d_k)</span>
+
+    <span class="k">return</span> <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+
+
+<span class="c1"># 相对位置多头自注意力模块，继承了基础的多头注意力模块</span>
+<span class="c1"># Class: RelPositonMultiHeadedAtten(MultiHeadedAttention)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_head</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">):</span>
+   	<span class="c1"># 相对位置嵌入的多头自注意力</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_head</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">)</span>
+    <span class="c1"># 用于位置编码的线性 Transformer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">linear_pos</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_feat</span><span class="p">,</span> <span class="n">n_feat</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># these two learnable bias are used in matrix c and matrix d</span>
+    <span class="c1"># as described in https://arxiv.org/abs/1901.02860 Section 3.3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pos_bias_u</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pos_bias_v</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">))</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos_bias_u</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos_bias_v</span><span class="p">)</span>
+
+    
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">pos_emb</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_qkv</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">new_cache</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_batch_pos</span> <span class="o">=</span> <span class="n">pos_emb</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_pos</span><span class="p">(</span><span class="n">pos_emb</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n_batch_pos</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">q_with_bias_u</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_bias_u</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">q_with_bias_v</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_bias_v</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># 首先计算矩阵 a 和 矩阵 c 的注意力分数</span>
+    <span class="n">matrix_ac</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">q_with_bias_u</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># 然后计算矩阵 b 和 矩阵 d 的注意力分数</span>
+    <span class="n">matrix_bd</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">q_with_bias_v</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="p">(</span><span class="n">matrix_ac</span> <span class="o">+</span> <span class="n">matrix_bd</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_attention</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">mask</span><span class="p">),</span> <span class="n">new_cache</span>
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h3>5.4 前馈网络<a class="headerlink" href="#id16" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/positionwise_feed_forward.py--&gt;PositionwiseFeedForward()</span></code></p>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">feed_forward</span><span class="p">):</span> <span class="n">PositionwiseFeedForward</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">w_1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">SiLU</span><span class="p">()</span>
+    <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">w_2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="p">(</span><span class="n">feed_forward_macaron</span><span class="p">):</span> <span class="n">PositionwiseFeedForward</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">w_1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">SiLU</span><span class="p">()</span>
+    <span class="p">(</span><span class="n">dropout</span><span class="p">):</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">w_2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class PositionwiseFeedForward(nn.module)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idim</span><span class="p">,</span> <span class="n">hidden_units</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="p">,</span> <span class="n">activation</span><span class="p">):</span>
+    <span class="c1"># 构建逐位前馈网路对象，默认采用 ReLU 激活</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">PositionwiseFeedForward</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">idim</span><span class="p">,</span> <span class="n">hidden_units</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">activation</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w_2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_units</span><span class="p">,</span> <span class="n">idim</span><span class="p">)</span>
+
+    
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_1</span><span class="p">(</span><span class="n">xs</span><span class="p">))))</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h3>5.5 卷积模块<a class="headerlink" href="#id17" title="此标题的永久链接">¶</a></h3>
+<p>模型目录位于 <code class="docutils literal notranslate"><span class="pre">wenet/transformer/convolution.py--&gt;ConvolutionModule</span></code></p>
+<p>模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">conv_module</span><span class="p">):</span> <span class="n">ConvolutionModule</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">pointwise_conv1</span><span class="p">):</span> <span class="n">Conv1d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+    <span class="p">(</span><span class="n">depthwise_conv</span><span class="p">):</span> <span class="n">Conv1d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">groups</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">norm</span><span class="p">):</span> <span class="n">LayerNorm</span><span class="p">((</span><span class="mi">256</span><span class="p">,),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">elementwise_affine</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">pointwise_conv2</span><span class="p">):</span> <span class="n">Conv1d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+    <span class="p">(</span><span class="n">activation</span><span class="p">):</span> <span class="n">SiLU</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Class PositionwiseFeedForward(nn.module)
+def __init__(self, channels, kernel_size, activation, norm, causal, bias):
+    # 卷积核大小设置为 15，norm 默认采用 batch norm，默认采用 ReLU 激活
+    super().__init__()
+    self.pointwise_conv1 = nn.Conv1d(channels, 2 * channels, kernel_size=1, stride=1, padding=0, bias=bias)
+    padding = (kernel_size - 1) // 2
+    self.lorder = 0
+    self.depthwise_conv = nn.Conv1d(channels, channels, kernel_size, stride=1, padding=padding, groups=channels, bias=bias)
+    self.use_layer_norm = True
+    self.norm = nn.LayerNorm(channels)
+    self.pointwise_conv2 = nn.Conv1d(channels, channels, kernel_size=1, stride=1, padding=0, bias=bias)
+    self.activation = activation
+    
+    
+def forward(self, x, mask_pad, cache)：
+	x = x.transpose(1, 2)
+    if mask_pad.size(2) &gt; 0:  # time &gt; 0
+        x.masked_fill_(~mask_pad, 0.0)
+    new_cache = torch.zeros((0, 0, 0), dtype=x.dtype, device=x.device)
+    # GLU 机制（逐点卷积）
+    x = self.pointwise_conv1(x)
+    x = nn.functional.glu(x, dim=1)
+    # 1D 深度卷积
+    x = self.depthwise_conv(x)
+    # LayerNorm
+    x = x.transpose(1, 2)
+    x = self.activation(self.norm(x))
+    x = x.transpose(1, 2)
+    # 第二次逐点卷积
+    x = self.pointwise_conv2(x)
+    
+    if mask_pad.size(2) &gt; 0:  # time &gt; 0
+        x.masked_fill_(~mask_pad, 0.0)
+    return x.transpose(1, 2), new_cache
+</pre></div>
+</div>
+</section>
+<section id="cmvn">
+<h3>5.6 CMVN<a class="headerlink" href="#cmvn" title="此标题的永久链接">¶</a></h3>
+<p>代码实现：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># class GlobalCMVN(nn.module)</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">istd</span><span class="p">,</span> <span class="n">norm_var</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">mean</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">istd</span><span class="o">.</span><span class="n">shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">norm_var</span> <span class="o">=</span> <span class="n">norm_var</span>
+    <span class="c1"># The buffer can be accessed from this module using self.mean</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;istd&quot;</span><span class="p">,</span> <span class="n">istd</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="c1"># 返回归一化的特征</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_var</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">istd</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</section>
+<section id="labelsmoothingloss">
+<h3>5.7 LabelSmoothingLoss<a class="headerlink" href="#labelsmoothingloss" title="此标题的永久链接">¶</a></h3>
+<p>在标准的 CE loss 中，标签的数据分布为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+[0,1,2] -&gt; \begin{aligned} {
+				[1.0,0.0,0.0], \\
+				[0.0,1.0,0.0], \\
+				[0.0,0.0,1.0],		
+			}\end{aligned}
+\end{split}\]</div>
+<p>在 Smoothing 版本的 CE loss 中，采用真实标签概率，在不同标签进行分布：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+smoothing=0.1 \\
+[0,1,2] -&gt; \begin{aligned} {
+				[0.9,0.05,0.05], \\
+				[0.05,0.9,0.05], \\
+				[0.05,0.05,0.9],		
+			}\end{aligned}
+\end{split}\]</div>
+</section>
+</section>
+</section>
+
+</main>
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="3-WeNet-LM%E6%A8%A1%E5%9E%8B.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>3-WeNet-LM模型
+    </a>
+    <a class="float-right" href="5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html" title="Next">
+        5-WeNet实验小结 <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
+                    </div>
+                    
+                    <nav class="col-12 col-lg-3 pb-4">
+                        <div class="sticky-top toc page-toc" aria-labelledby="page-toc-heading">
+                            <p class="font-weight-bold" id="page-toc-heading">Page contents</p>
+                            <ul>
+<li><a class="reference internal" href="#">4-Wenet模型结构</a><ul>
+<li><a class="reference internal" href="#asr">1、ASR 模型</a></li>
+<li><a class="reference internal" href="#id1">2、损失</a><ul>
+<li><a class="reference internal" href="#ctc">2.1 CTC 损失</a></li>
+<li><a class="reference internal" href="#id2">2.2 注意力损失</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">3、编码器模块实现</a><ul>
+<li><a class="reference internal" href="#id4">3.1 全局归一化</a></li>
+<li><a class="reference internal" href="#id5">3.2 编码器嵌入编码</a></li>
+<li><a class="reference internal" href="#id6">3.3 层归一化</a></li>
+<li><a class="reference internal" href="#conformer">3.4 Conformer 编码器层</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">4、解码器模块实现</a><ul>
+<li><a class="reference internal" href="#id8">4.1 解码器嵌入编码</a></li>
+<li><a class="reference internal" href="#id9">4.2 层归一化</a></li>
+<li><a class="reference internal" href="#id10">4.3 层输出</a></li>
+<li><a class="reference internal" href="#id11">4.4 注意力解码器</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id12">5、子模块实现</a><ul>
+<li><a class="reference internal" href="#id13">5.1 卷积子采样</a></li>
+<li><a class="reference internal" href="#id14">5.2 位置编码</a></li>
+<li><a class="reference internal" href="#id15">5.3 多头自注意力</a></li>
+<li><a class="reference internal" href="#id16">5.4 前馈网络</a></li>
+<li><a class="reference internal" href="#id17">5.5 卷积模块</a></li>
+<li><a class="reference internal" href="#cmvn">5.6 CMVN</a></li>
+<li><a class="reference internal" href="#labelsmoothingloss">5.7 LabelSmoothingLoss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                        </div>
+                    </nav>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-primary text-light">
+        <div class="container">
+            <div class="row">
+        <div class="col p-4">
+            
+                <nav aria-label="Footer">
+                    <ul class="nav justify-content-center mb-2">
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/features/">Features</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/about-wagtail/"> About Wagtail</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/services/"> Services</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/blog/"> Blog</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/packages/"> Packages</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/developers/"> Developers</a></li>
+                        
+                    </ul>
+                </nav>
+            
+            <div class="text-center">
+                <p style="display: none">
+                    <a class="text-light" href="https://github.com/wagtail/sphinx_wagtail_theme" rel="nofollow" target="_blank">
+                        Wagtail Sphinx Theme 6.0.0
+                    </a>
+                </p>
+            </div>
+            <div class="text-center">
+                    &copy; Copyright 2023, 李仲亮
+            </div>
+        </div>
+    </div>
+        </div>
+    </footer>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/theme.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/vendor.js"></script>
+        <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() { Search.loadIndex("../../../searchindex.js"); });
+        </script>
+        <script type="text/javascript" id="searchindexloader"></script>
+    </body>
+</html>

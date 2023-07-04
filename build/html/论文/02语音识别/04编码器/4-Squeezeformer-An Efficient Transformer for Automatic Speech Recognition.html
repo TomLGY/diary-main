@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+        <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition &mdash; SphinxDiary v1.0 文档</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/dist/fontawesome.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/dist/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+            <link rel="index" title="索引" href="../../../genindex.html" />
+            <link rel="search" title="搜索" href="../../../search.html" />
+            <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="up" title="编码器" href="../4-index.html" />
+            <link rel="next" title="联邦学习" href="../../3-index.html" />
+            <link rel="prev" title="3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition" href="3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html" />
+    </head>
+<body>
+    <script type="text/javascript" src="../../../_static/dist/blocking.js"></script>
+    <header class="container-fluid bg-primary">
+        <a class="btn btn-sm btn-light skip-to-content-link" href="#main">Skip to content</a>
+        <div class="container-fluid">
+            <div class="navbar navbar-expand-lg navbar-dark font-weight-bold">
+                    <a href="../../../index.html"
+                        title="Wagtail"
+                        class="logo navbar-brand"
+                    >
+                        <img src="../../../_static/img/wagtail-logo-new.svg" width="45" height="59" alt="Wagtail"
+                            class="logo-img"
+                        />
+                        Sphinx Wagtail Theme
+                    </a>
+                
+                
+                <button class="navbar-toggler btn btn-primary d-lg-none" type="button" data-toggle="collapse" data-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="sr-only">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-12 col-lg-3 sidebar-container">
+                <div id="collapseSidebar" class="collapse sticky-top d-lg-block pt-5 pr-lg-4">
+<div id="searchbox" class="searchbox mb-6 px-1" role="search">
+    <form id="search-form" action="../../../search.html" autocomplete="off" method="get" role="search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text border-right-0 bg-white py-3 pl-3 pr-2"><span class="fas fa-search"></span></div>
+            </div>
+            <input class="form-control py-3 pr-3 pl-1 h-100 border-left-0" type="search" name="q" placeholder="Search documentation" aria-label="Search documentation" id="searchinput" />
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div><div class="site-toc">
+    <nav class="toc mt-3" aria-label="Main menu">
+        <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/1-index.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/03Docker%E5%AE%B9%E5%99%A8%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB.html">Docker容器备份与迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/2-index.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/01%E5%9C%A8Ubuntu18.04%E4%B8%8A%E6%90%AD%E5%BB%BAkubernetes.html">kubernetes安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/02%E4%BD%BF%E7%94%A8MIG%E5%92%8CKubernetes%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2NVIDIA%20Triton.html">Kubernetes部署NVIDIA Triton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/03%E4%BD%BF%E7%94%A8Kubernetes%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4.html">Kubernetes创建集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/04Triton%20Metrics.html">Triton Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/05Grafana.html">Grafana</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/3-index.html">Triton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/01Triton_Inference_Server%E5%85%A5%E9%97%A8.html">Triton Inference Server入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/02Triton%E5%85%A5%E9%97%A8%E7%BA%A7%E6%95%99%E7%A8%8B.html">Triton入门级教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/03Triton_Backend%E8%AF%A6%E8%A7%A3.html">Triton_Backend详解</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/4-index.html">Pytorch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/04Pytorch/01%E6%95%B0%E6%8D%AE%E9%9B%86.html">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/5-index.html">语音识别环境部署教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/01jetpack5.0.2%E5%AE%89%E8%A3%85.html">Jetpack 5.0.2安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html">深度学习环境配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/03%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2.html">语音识别模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html">客户端模型推理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/05%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.html">性能测试</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/6-index.html">小工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/01Git.html">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/2-index.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/01GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（一）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/02GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（二）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/03Markdown.html">Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/04MyST-Parser.html">MyST-Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/03Fastertransformer.html">Fastertransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/04FileBrowser.html">FileBrowser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/05NFS%E9%85%8D%E7%BD%AE.html">NFS配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/06%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">服务器文件管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/07StableDiffusion.html">Stable Diffusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/7-index.html">NNI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/01-NNI%E7%A4%BA%E4%BE%8B.html">NNI 示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/02-NNI%E9%83%A8%E7%BD%B2.html">NNI 部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/8-index.html">Android</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/08Android/01Android%20APK.html">Android APK</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">论文:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../1-index.html">Fine tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/01Prompt%20Tuning.html">Prompt Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/02Prompt%20Tuning%20v2.html">Prompt Tuning V2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/03Lora.html">LoRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/04ChatGLM%E5%BE%AE%E8%B0%83%E5%AE%9E%E9%AA%8C.html">ChatGLM微调实验</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../2-index.html">语音识别</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1-index.html">语音识别综述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/1-Recent%20Advance%20in%20End-to-End%20Automatic%20Speech%20Recognition.html">1-Recent Advance in End-to-End Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/2-A%20Comparative%20Study%20On%20Transformer%20VS%20RNN%20In%20Speech%20Applications.html">2-A Comparative Study On Transformer VS RNN In Speech Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2-index.html">Wenet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../02Wenet/1-WeNet%20Production%20Oriented%20Streaming%20and%20Non-Streaming%20End-to-End%20Speech%20Recognition%20Toolkit.html">1-WeNet Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02Wenet/2-WeNet2.0%20More%20Productive%20End-to-End%20Speech%20Recognition%20Toolkit.html">2-Wenet2.0 More Productive End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02Wenet/3-WeNet-LM%E6%A8%A1%E5%9E%8B.html">3-WeNet-LM模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02Wenet/4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html">4-Wenet模型结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02Wenet/5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html">5-WeNet实验小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02Wenet/6-WeNet%E9%83%A8%E7%BD%B2.html">6-WeNet部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-index.html">模型微调</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/1-FINE-TUNING%20OF%20PRE-TRAINED%20END-TO-END%20SPEECH%20RECOGNITION%20WITH%20GENERATIVE%20ADVERSARIAL%20NETWORKS.html">1-Fine-Tuning Of Pre-trained end-to-end Speech Recognition With Generative Adversarial Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../4-index.html">编码器</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1-Conformer-Convolution-augmented%20Transformer%20for%20Speech%20Recognition.html">1-Conformer-Convolution-augmented Transformer for Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-Paraformer-Fast%20and%20Accurate%20Parallel%20Transformer%20for%20Non-autoregressive.html">2-Paraformer-Fast and Accurate Parallel Transformer for Non-autoregressive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html">3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../3-index.html">联邦学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/1-index.html">联邦学习项目</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/01%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/1-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">联邦学习开源项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../4-index.html">语言模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/1-Transformer-XL-Attention%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.html">1-Transformer-XL-Attention Language Models Beyond a Fixed-Length Context</a></li>
+</ul>
+</li>
+</ul>
+
+    </nav>
+    <template data-toggle-item-template>
+        <button class="btn btn-sm btn-link toctree-expand" type="button">
+            <span class="sr-only">Toggle menu contents</span>
+        </button>
+    </template>
+</div>
+                    <div class="d-lg-none border-bottom">
+                        
+                    </div>
+                </div>
+            </aside>
+            <div class="col-12 col-lg-9 pt-5">
+                <header class="row align-items-baseline">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-0 p-0 bg-transparent">
+        <li class="breadcrumb-item"><a href="../../../index.html">Docs</a></li>
+            <li class="breadcrumb-item"><a href="../../2-index.html">语音识别</a></li>
+            <li class="breadcrumb-item"><a href="../4-index.html">编码器</a></li>
+        <li class="breadcrumb-item active" aria-current="page">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</li>
+    </ol>
+</nav>
+                    </div>
+                    <div class="col-sm-12 col-lg-auto mt-3 mt-lg-3">
+                        <noscript>
+                            <p>JavaScript is required to toggle light/dark mode..</p>
+                        </noscript>
+                        <button id="wagtail-theme" class="btn btn-sm btn-light text-decoration-none" type="button">
+                            <span class="dark-only"><i class="fas fa-sun"></i> Light mode</span>
+                            <span class="light-only"><i class="fas fa-moon"></i> Dark mode</span>
+                        </button>
+    <a class="btn btn-sm btn-light text-decoration-none" href="https://github.com/wagtail/sphinx_wagtail_theme/blob/main/docs/论文/02语音识别/04编码器/4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition.md" rel="nofollow">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
+    <a class="btn btn-sm btn-light text-decoration-none" href="../../../_sources/论文/02语音识别/04编码器/4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition.md.txt" rel="nofollow">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+                        
+                    </div>
+                </header>
+                <div class="row" >
+                    <div class="col-12">
+                        <hr class="w-100 my-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
+                        <main role="main" id="main">
+    <section class="tex2jax_ignore mathjax_ignore" id="squeezeformer-an-efficient-transformer-for-automatic-speech-recognition">
+<h1>4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition<a class="headerlink" href="#squeezeformer-an-efficient-transformer-for-automatic-speech-recognition" title="此标题的永久链接">¶</a></h1>
+<p>论文链接：<a class="reference external" href="https://arxiv.org/abs/2206.00888">https://arxiv.org/abs/2206.00888</a></p>
+<p>开源代码：<a class="reference external" href="https://github.com/kssteven418/squeezeformer">https://github.com/kssteven418/squeezeformer</a></p>
+<p>本文提出了 Squeezeformer 网络架构，在相同的训练方案下优于先进的 ASR 模型。对于宏架构，Squeezeformer 结合了时间 U-Net 架构，降低了长序列多头注意力模块的开销，使用更简单的多头注意力或卷积的块结构，然后是前馈模块，不是 Conformer 提出的 Macaron 结构；对于微架构，Squeezeformer 简化了卷积块中的激活，去除了冗余的层归一化操作，结合有效的深度下采样对输入信号进行子采样。在LibraSpeech 数据集下较相同 FLOP 的 Conformer 模型有更好的结果。</p>
+<section id="id1">
+<h2>一、引言<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h2>
+<p>CNN 模型缺乏捕获全局上下文的能力，Transformer 具有巨大的计算和内存开销，Conformer 是一种卷积增强的 Transformer 结构，能够从音频信号中捕获全局和局部特征，成为各种端到端语音识别任务的基准模型。但仍具有一些局限性：在长序列受到注意力机制二次复杂性的影响，相较 Transformer 架构更加复杂，包含了不同归一化方案和激活函数、Macaron 结构和 back-to-back 多头注意力和卷积模块，难以在专用硬件平台上有效进行模型部署。本文提出了疑问，这样的设计方案是否是必要的和最优的。</p>
+<p>本文对每一个设计进行了系统性的分析，目标是在给定的预算下实现较低的 WER，在宏观和微观层面开发了更简单、更高效的混合注意力卷积架构，性能优于先进的 ASR 模型。</p>
+<ul class="simple">
+<li><p>学习相邻语音帧的特征表示时存在很高的时间特征冗余，尤其在网络的深处，导致了不必要的计算开销。本文引入了时间 U-Net 结构，下采样层在网络中间将采样率减半，轻量上采样层在最后恢复时间分辨率保证训练稳定性</p></li>
+<li><p>重新设计了混合注意力卷积架构，提出了类似于标准 Transformer 块的更简单的块结构，其中 MHA 和卷积模块各自直接后跟单个前馈模块</p></li>
+<li><p>使用 Swish 代替 GLU 激活；简化层归一化，将冗余的层前归一化替换为可缩放的层后归一化，该缩放结合残差路径的可学习缩放，该残差路径可以与其它层合并，推理过程零开销；第一子采样层采用深度分离卷积，从而减少浮点运算</p></li>
+<li><p>在相同设置下训练，Squeezeformer 架构在较小或较大模型中都能很好得到扩展，始终优于最先进的 ASR 模型，通过反向消融研究验证了我们提出的 Squeezeformer 架构的合理性</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>二、模型架构<a class="headerlink" href="#id2" title="此标题的永久链接">¶</a></h2>
+<p>在宏观层面上，Conformer 结合了 Macaron 结构，每个块由四个单元组成，如图 2(左) 所示，这些块多个堆叠形成 Conformer 结构。我们选择 Conformer-CTC-M 作为案例研究的基线模型，使用 LibriSpeech 数据集进行性能评估，测试 30s 模型输入的 FLOP 作为模型效率评估。</p>
+<p><img alt="" src="../../../_images/image-20230614094611540.png" /></p>
+<center>图2 （左）Conformer 架构（右）Sequeezeformer 架构</center>
+<section id="id3">
+<h3>2.1 宏架构设计<a class="headerlink" href="#id3" title="此标题的永久链接">¶</a></h3>
+<section id="u-net">
+<h4>2.1.1 时间 U-Net 架构<a class="headerlink" href="#u-net" title="此标题的永久链接">¶</a></h4>
+<p>注意力操作相对于输入序列长度具有二次 FLOP 复杂度，我们提议通过减少序列长度上计算注意力来<strong>减轻额外开销</strong>，输入采样率从 10ms 降低到 40ms，在网络基础上使用卷积子采样单元，然而，这个速率在整个网络中保持不变，所有注意力和卷积以恒定时间尺度进行。</p>
+<p>我们研究在可学习特征表征中的时间冗余，通过 Conformer 模型深度分析学习的特征如何嵌入到每一个语音帧，从 LibriSpeech 数据集上随机采样 100 个音频信号，通过 Conformer 块进行处理，记录每个块的激活情况，测量两个相邻嵌入向量之间平均余弦相似性，如图 3 实现所示：</p>
+<p><img alt="" src="../../../_images/image-20230614101311186.png" /></p>
+<center>图3 相邻语音帧之间两个嵌入向量之间的余弦相似性</center>
+<p>直接相连的语音帧在最顶层有 95% 的平均相似性，甚至彼此远离的 4 个语音帧也具有 80% 的相似性，随着输入通过网络中更深层次的 Conformer 块进行处理，时间冗余度会不断增加。我们假设特征嵌入向量中的这种冗余会导致不必要的计算开销，并且序列长度可以在深层网络减小，而不会损失准确性。</p>
+<p>我们第一个宏观体系的改进，我们更改 Conformer 模型，在模型早期块对嵌入向量处理后，进行子采样。具体而言，将采样率保持在 40ms 直到第七个块，然后使用池化层将每个序列的采样率调整到 80ms，对于池化层使用步长为 2，核大小为 3 的深度可分离卷积合并相邻嵌入之间的冗余，这将注意力复杂度降低了 4 倍，也减少了特征的冗余。在计算机视觉中，通常在空间上对输入图像进行下采样，使用 Efficient Conformer 以节省计算并开发层级特征。</p>
+<p>然而，单独的时间下采样会导致训练不稳定和训练发散，其中一个原因是下采样到 80ms 后，解码器缺乏足够的分辨率。解码器需要将每个语音帧嵌入到单个标签中，例如字符，因此需要足够的分辨率来成功解码整个序列。受计算机视觉 U-Net 的启发，结合和时间 U-Net 结构，通过上采样层恢复网络末端的分辨率，上采样块接收 40ms 和 80ms 采样率处理的嵌入向量，并使用跳跃连接将它们相加，产生 40ms 采样率嵌入。与我们的时间 U-Net 最近的工作是 [43] 中提出的方法，其中 U-Net 架构融合到全卷积模型中，以对睡眠信号进行下采样。</p>
+<p>与 Conformer 相比，这一变化使总的 FLOPs减少了 20%，测试的 WER 也提高了 0.62%，对余弦相似性的分析表明，时间 U-Net 结构避免了相邻嵌入在后面的块过于相似，特别是直接影响解码结果的最后一个块上，如图 3 的虚线所示。</p>
+</section>
+<section id="transformer-style">
+<h4>2.1.2 Transformer-Style 块设计<a class="headerlink" href="#transformer-style" title="此标题的永久链接">¶</a></h4>
+<p>Conformer 由一系列前馈网络(‘F’)、多头注意力(MHA, ‘M’)、卷积(‘C’)和另一个前馈模块(‘F’)组成，称为 FMCF 结构。ASR 模型卷积核大小相当大(31)，其行为类似混合全局信息注意力，因此将具有类似功能的卷积和 MHA 放在一起组成 MC 结构并不合适，我们考虑 MF-CF 结构，其动机是将卷积单元视为局部 MHA 单元。此外，我们放弃了 Macaron 结构，使用 Transformer 类型的网络表示 MF 和 CF 结构，如图 2 所示，该修改在 dev-other 下的 WER 可进一步提高 0.16%。</p>
+</section>
+</section>
+<section id="id4">
+<h3>2.2 微架构设计<a class="headerlink" href="#id4" title="此标题的永久链接">¶</a></h3>
+<p>目前为止完成了 Squeezeformer 的宏架构，将 CV 和 NLP 领域的开创性架构融入到 Conformer 中。本节重点放在单个单元的优化上，进一步简化模型架构，同时提高效率和性能。</p>
+<center>表1 </center>
+<p><img alt="" src="../../../_images/image-20230614145438255.png" /></p>
+<section id="unified">
+<h4>2.2.1 Unified 激活<a class="headerlink" href="#unified" title="此标题的永久链接">¶</a></h4>
+<p>Conformer 对大多数块使用 Swish 激活，对于卷积模块使用 GLU 激活。这样的异构设计似乎过于复杂且不必要，使硬件部署复杂化，在没有专用矢量处理单元的低端边缘设备上，支持额外的非线性操作需要额外的查找表或高级算法。为了解决这一问题，我们建议使用 Swish 取代 GLU 激活，统一整个模型的激活函数。我们保持卷积单元的扩张率(expansion rate)。如表 1 的第 4 行所示，这一变化并没有导致 WER 和 FLOP 发生明显变化，只是简化了模型结构。</p>
+</section>
+<section id="id5">
+<h4>2.2.2 简化层归一化<a class="headerlink" href="#id5" title="此标题的永久链接">¶</a></h4>
+<p>我们观察到 Conformer 模型包含冗余的层归一化操作，如图 4 左段，这是因为 Conformer 模型既包含在残差块之间应用层归一化的 postLN，也包含在残差块内部应用层归一化的 preLN，preLN 有助于训练稳定，postLN 有助于性能，但两个模块的一起使用会带来冗余操作，除了体系结构冗余之外，层归一化由于其全局残差运算，其计算成本很高。</p>
+<p><img alt="" src="../../../_images/image-20230614145757069.png" /></p>
+<center>图4 preLN 和 postLN</center>
+<p>我们发现直接去除 preLN 或 postLN 会导致训练不稳定带来收敛失败，在研究失败原因时，发现典型的已训练的 Conformer 模型在 preLN 和 postLN 可学习的尺度变量存在数量级的差异。具体来说，我们发现 preLN 会将输入信号按规模缩小，从而为跳跃连接赋予了更多的权重，因此，在替换 preLN 组件时使用缩放层以允许网络控制该权重是必要的。这种想法在与其它领域的几种训练策略相一致，例如 NF-Net 提出了在残差块前和后的可学习缩放，以在没有归一化的情况下稳定训练。此外，DeepNet 最近提出在跳跃连接中添加不可训练的基于规则的缩放，以稳定 Transformer 中的 preLN。</p>
+<p>受计算机视觉的启发，我们采用一个可学习的缩放层取代 preLN，<span class="math notranslate nohighlight">\(Scaling(x) = \gamma x + \beta\)</span>，其中 <span class="math notranslate nohighlight">\(\gamma\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 是可学习的权重和偏移。为了实现架构的同质性，如图 2(右) 所示，我们将所有模块的 preLN 替换为 postLN，然后按比例缩放，整个模型仅包含 postLN。通过可学习缩放，模型测试进一步提高了 0.20%。</p>
+</section>
+<section id="id6">
+<h4>2.2.3 深度可分离子采样<a class="headerlink" href="#id6" title="此标题的永久链接">¶</a></h4>
+<p>现在关注子采样模块，其在 FLOP 总数占了很大一部分，这是因为子采样层使用两个 vanilla 卷积运算，每个运算的步长为 2，为了减小该层的开销，我们将第二个卷积操作替换为深度可分离卷积，同时保持核大小和步长不变，第一次卷积操作保持原样，实现了 22% 基线 FLOPs 的减少，WER 没有受到影响。需要注意的是，深度可分离卷积很难有效映射到硬件加速器，部分原因是其算术密度低，然而，考虑到 FLOP 的减少，总吞吐量可以提高。</p>
+<p>我们将所有改进最终命名为 Squeezeformer-SM，与基线 ConformerCTC-M 相比，WER 提高了 1.01%，FLOP 减少了 40%，放大模型可以实现 0.39% 额外 WER 增益，我们将此架构命名为 Squeezeformer-M。</p>
+</section>
+</section>
+</section>
+<section id="id7">
+<h2>三、实验结果<a class="headerlink" href="#id7" title="此标题的永久链接">¶</a></h2>
+<section id="id8">
+<h3>3.1 实验设置<a class="headerlink" href="#id8" title="此标题的永久链接">¶</a></h3>
+<p>对于模型设置，我们构建了具有不同大小和 FLOPs 的 Squeezeformer 模型，模型的具体细节见表 2 所示：</p>
+<center>表2 Conformer 和 Squeezeformer 详细架构配置</center>
+<p><img alt="" src="../../../_images/image-20230617160832781.png" /></p>
+<p>对于解码，我们使用 CTC 解码器，采用非自回归解码方案。然而，本文工作的重点是编码器模型架构设计，它与解码器类型相互正交。</p>
+<p>在许多先前工作中，解码器通常使用外部语言模型进行增强，例如预训练的 4-gram 或 Transformer，其通过更灵活的方式对输出重新评分以增强最终的 WER。我们比较没有外部语言模型的结果，语言模型设计与我们的工作相互正交</p>
+<p>对于训练的详细信息，我们在 LibriSpeech-960hr 对 Conformer-CTC 和 Squeezeformer 进行了 500 个 epochs 的训练，在 Google 云 TPUs v3 上训练，对中小模型的批处理大小为 1024，对大模型的批处理大小为 2048。使用 AdamW 优化器，所有模型的权重衰减为 5e-4。</p>
+</section>
+<section id="id9">
+<h3>3.2 实验结果<a class="headerlink" href="#id9" title="此标题的永久链接">¶</a></h3>
+<p>我们在 clean 和 other 数据集上比较了 Squeezeformer、Conformer 以及其它先进基于 CTC 的 ASR 模型的比较，包括 QuartzNet、CitriNet、Transformer 以及 Efficient Conformer。</p>
+<p>我们的 Squeezeformer 在 WER 和 FLOPs 上均显著优于 Conformer 和其它先进的 ASR 模型。</p>
+<center>表3</center>
+<p><img alt="" src="../../../_images/image-20230617162340960.png" /></p>
+</section>
+<section id="id10">
+<h3>3.3 消融实验<a class="headerlink" href="#id10" title="此标题的永久链接">¶</a></h3>
+<p>本文对 Squeezeformer 为基线模型的单个架构选择坐额外的消融研究，见表 4：</p>
+<center>表4 </center>
+<p><img alt="" src="../../../_images/image-20230617163217228.png" /></p>
+<p><strong>时间 U-Net 结构</strong></p>
+<p>在没有下采样层到上采样层跳跃连接的情况下，模型性能损失 0.35/0.87。表明早期层收集的高分辨率信息对解码有至关重要，模型在没有上采样层的情况下无法收敛</p>
+<p><strong>Layernorm 结构</strong></p>
+<p>模型在只有 PostLN 方案 和只有 PreLN 方案的训练均无法收敛，报告了发散前的最佳 WER，结果表明，可学习的缩放层对训练稳定性和 WER 起着关键作用</p>
+<p><strong>卷积模块</strong></p>
+<p>当消融卷积模块的 GLU 激活时，另一个选择是将其 drop 掉，不使用 Switch 激活代替，这会导致 0.10/0.22 的性能恶化</p>
+</section>
+</section>
+</section>
+
+</main>
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition
+    </a>
+    <a class="float-right" href="../../3-index.html" title="Next">
+        联邦学习 <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
+                    </div>
+                    
+                    <nav class="col-12 col-lg-3 pb-4">
+                        <div class="sticky-top toc page-toc" aria-labelledby="page-toc-heading">
+                            <p class="font-weight-bold" id="page-toc-heading">Page contents</p>
+                            <ul>
+<li><a class="reference internal" href="#">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a><ul>
+<li><a class="reference internal" href="#id1">一、引言</a></li>
+<li><a class="reference internal" href="#id2">二、模型架构</a><ul>
+<li><a class="reference internal" href="#id3">2.1 宏架构设计</a><ul>
+<li><a class="reference internal" href="#u-net">2.1.1 时间 U-Net 架构</a></li>
+<li><a class="reference internal" href="#transformer-style">2.1.2 Transformer-Style 块设计</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">2.2 微架构设计</a><ul>
+<li><a class="reference internal" href="#unified">2.2.1 Unified 激活</a></li>
+<li><a class="reference internal" href="#id5">2.2.2 简化层归一化</a></li>
+<li><a class="reference internal" href="#id6">2.2.3 深度可分离子采样</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">三、实验结果</a><ul>
+<li><a class="reference internal" href="#id8">3.1 实验设置</a></li>
+<li><a class="reference internal" href="#id9">3.2 实验结果</a></li>
+<li><a class="reference internal" href="#id10">3.3 消融实验</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                        </div>
+                    </nav>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-primary text-light">
+        <div class="container">
+            <div class="row">
+        <div class="col p-4">
+            
+                <nav aria-label="Footer">
+                    <ul class="nav justify-content-center mb-2">
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/features/">Features</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/about-wagtail/"> About Wagtail</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/services/"> Services</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/blog/"> Blog</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/packages/"> Packages</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/developers/"> Developers</a></li>
+                        
+                    </ul>
+                </nav>
+            
+            <div class="text-center">
+                <p style="display: none">
+                    <a class="text-light" href="https://github.com/wagtail/sphinx_wagtail_theme" rel="nofollow" target="_blank">
+                        Wagtail Sphinx Theme 6.0.0
+                    </a>
+                </p>
+            </div>
+            <div class="text-center">
+                    &copy; Copyright 2023, 李仲亮
+            </div>
+        </div>
+    </div>
+        </div>
+    </footer>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/theme.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/vendor.js"></script>
+        <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() { Search.loadIndex("../../../searchindex.js"); });
+        </script>
+        <script type="text/javascript" id="searchindexloader"></script>
+    </body>
+</html>

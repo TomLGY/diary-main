@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+        <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>语音识别模型部署 &mdash; SphinxDiary v1.0 文档</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/dist/fontawesome.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dist/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+            <link rel="index" title="索引" href="../../genindex.html" />
+            <link rel="search" title="搜索" href="../../search.html" />
+            <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="up" title="语音识别环境部署教程" href="../5-index.html" />
+            <link rel="next" title="客户端模型推理" href="04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html" />
+            <link rel="prev" title="深度学习环境配置" href="02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" />
+    </head>
+<body>
+    <script type="text/javascript" src="../../_static/dist/blocking.js"></script>
+    <header class="container-fluid bg-primary">
+        <a class="btn btn-sm btn-light skip-to-content-link" href="#main">Skip to content</a>
+        <div class="container-fluid">
+            <div class="navbar navbar-expand-lg navbar-dark font-weight-bold">
+                    <a href="../../index.html"
+                        title="Wagtail"
+                        class="logo navbar-brand"
+                    >
+                        <img src="../../_static/img/wagtail-logo-new.svg" width="45" height="59" alt="Wagtail"
+                            class="logo-img"
+                        />
+                        Sphinx Wagtail Theme
+                    </a>
+                
+                
+                <button class="navbar-toggler btn btn-primary d-lg-none" type="button" data-toggle="collapse" data-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="sr-only">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-12 col-lg-3 sidebar-container">
+                <div id="collapseSidebar" class="collapse sticky-top d-lg-block pt-5 pr-lg-4">
+<div id="searchbox" class="searchbox mb-6 px-1" role="search">
+    <form id="search-form" action="../../search.html" autocomplete="off" method="get" role="search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text border-right-0 bg-white py-3 pl-3 pr-2"><span class="fas fa-search"></span></div>
+            </div>
+            <input class="form-control py-3 pr-3 pl-1 h-100 border-left-0" type="search" name="q" placeholder="Search documentation" aria-label="Search documentation" id="searchinput" />
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div><div class="site-toc">
+    <nav class="toc mt-3" aria-label="Main menu">
+        <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-index.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01Docker/03Docker%E5%AE%B9%E5%99%A8%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB.html">Docker容器备份与迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-index.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/01%E5%9C%A8Ubuntu18.04%E4%B8%8A%E6%90%AD%E5%BB%BAkubernetes.html">kubernetes安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/02%E4%BD%BF%E7%94%A8MIG%E5%92%8CKubernetes%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2NVIDIA%20Triton.html">Kubernetes部署NVIDIA Triton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/03%E4%BD%BF%E7%94%A8Kubernetes%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4.html">Kubernetes创建集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/04Triton%20Metrics.html">Triton Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/05Grafana.html">Grafana</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-index.html">Triton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03Triton/01Triton_Inference_Server%E5%85%A5%E9%97%A8.html">Triton Inference Server入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03Triton/02Triton%E5%85%A5%E9%97%A8%E7%BA%A7%E6%95%99%E7%A8%8B.html">Triton入门级教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03Triton/03Triton_Backend%E8%AF%A6%E8%A7%A3.html">Triton_Backend详解</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4-index.html">Pytorch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04Pytorch/01%E6%95%B0%E6%8D%AE%E9%9B%86.html">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../5-index.html">语音识别环境部署教程</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01jetpack5.0.2%E5%AE%89%E8%A3%85.html">Jetpack 5.0.2安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html">深度学习环境配置</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">语音识别模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html">客户端模型推理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.html">性能测试</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6-index.html">小工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/01Git.html">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/2-index.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/01GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（一）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/02GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（二）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/03Markdown.html">Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/04MyST-Parser.html">MyST-Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/03Fastertransformer.html">Fastertransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/04FileBrowser.html">FileBrowser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/05NFS%E9%85%8D%E7%BD%AE.html">NFS配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/06%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">服务器文件管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/07StableDiffusion.html">Stable Diffusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7-index.html">NNI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../07NNI/01-NNI%E7%A4%BA%E4%BE%8B.html">NNI 示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07NNI/02-NNI%E9%83%A8%E7%BD%B2.html">NNI 部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-index.html">Android</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../08Android/01Android%20APK.html">Android APK</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">论文:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/1-index.html">Fine tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/01Prompt%20Tuning.html">Prompt Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/02Prompt%20Tuning%20v2.html">Prompt Tuning V2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/03Lora.html">LoRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/04ChatGLM%E5%BE%AE%E8%B0%83%E5%AE%9E%E9%AA%8C.html">ChatGLM微调实验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/2-index.html">语音识别</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/1-index.html">语音识别综述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/1-Recent%20Advance%20in%20End-to-End%20Automatic%20Speech%20Recognition.html">1-Recent Advance in End-to-End Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/2-A%20Comparative%20Study%20On%20Transformer%20VS%20RNN%20In%20Speech%20Applications.html">2-A Comparative Study On Transformer VS RNN In Speech Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/2-index.html">Wenet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/1-WeNet%20Production%20Oriented%20Streaming%20and%20Non-Streaming%20End-to-End%20Speech%20Recognition%20Toolkit.html">1-WeNet Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/2-WeNet2.0%20More%20Productive%20End-to-End%20Speech%20Recognition%20Toolkit.html">2-Wenet2.0 More Productive End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/3-WeNet-LM%E6%A8%A1%E5%9E%8B.html">3-WeNet-LM模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html">4-Wenet模型结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html">5-WeNet实验小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/6-WeNet%E9%83%A8%E7%BD%B2.html">6-WeNet部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/3-index.html">模型微调</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/03%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/1-FINE-TUNING%20OF%20PRE-TRAINED%20END-TO-END%20SPEECH%20RECOGNITION%20WITH%20GENERATIVE%20ADVERSARIAL%20NETWORKS.html">1-Fine-Tuning Of Pre-trained end-to-end Speech Recognition With Generative Adversarial Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/4-index.html">编码器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/1-Conformer-Convolution-augmented%20Transformer%20for%20Speech%20Recognition.html">1-Conformer-Convolution-augmented Transformer for Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/2-Paraformer-Fast%20and%20Accurate%20Parallel%20Transformer%20for%20Non-autoregressive.html">2-Paraformer-Fast and Accurate Parallel Transformer for Non-autoregressive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html">3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/4-Squeezeformer-An%20Efficient%20Transformer%20for%20Automatic%20Speech%20Recognition.html">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/3-index.html">联邦学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/1-index.html">联邦学习项目</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/01%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/1-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">联邦学习开源项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/4-index.html">语言模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/04%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/1-Transformer-XL-Attention%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.html">1-Transformer-XL-Attention Language Models Beyond a Fixed-Length Context</a></li>
+</ul>
+</li>
+</ul>
+
+    </nav>
+    <template data-toggle-item-template>
+        <button class="btn btn-sm btn-link toctree-expand" type="button">
+            <span class="sr-only">Toggle menu contents</span>
+        </button>
+    </template>
+</div>
+                    <div class="d-lg-none border-bottom">
+                        
+                    </div>
+                </div>
+            </aside>
+            <div class="col-12 col-lg-9 pt-5">
+                <header class="row align-items-baseline">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-0 p-0 bg-transparent">
+        <li class="breadcrumb-item"><a href="../../index.html">Docs</a></li>
+            <li class="breadcrumb-item"><a href="../5-index.html">语音识别环境部署教程</a></li>
+        <li class="breadcrumb-item active" aria-current="page">语音识别模型部署</li>
+    </ol>
+</nav>
+                    </div>
+                    <div class="col-sm-12 col-lg-auto mt-3 mt-lg-3">
+                        <noscript>
+                            <p>JavaScript is required to toggle light/dark mode..</p>
+                        </noscript>
+                        <button id="wagtail-theme" class="btn btn-sm btn-light text-decoration-none" type="button">
+                            <span class="dark-only"><i class="fas fa-sun"></i> Light mode</span>
+                            <span class="light-only"><i class="fas fa-moon"></i> Dark mode</span>
+                        </button>
+    <a class="btn btn-sm btn-light text-decoration-none" href="https://github.com/wagtail/sphinx_wagtail_theme/blob/main/docs/笔记/05语音识别环境部署教程/03语音识别模型部署.md" rel="nofollow">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
+    <a class="btn btn-sm btn-light text-decoration-none" href="../../_sources/笔记/05语音识别环境部署教程/03语音识别模型部署.md.txt" rel="nofollow">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+                        
+                    </div>
+                </header>
+                <div class="row" >
+                    <div class="col-12">
+                        <hr class="w-100 my-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
+                        <main role="main" id="main">
+    <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>语音识别模型部署<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h1>
+<section id="id2">
+<h2>一、模型准备<a class="headerlink" href="#id2" title="此标题的永久链接">¶</a></h2>
+<p>​	下载最新版开源语音识别工具包wenet</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">wenet</span><span class="o">-</span><span class="n">e2e</span><span class="o">/</span><span class="n">wenet</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>下载基于Conformer编码器的预训练语音识别模型</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://wenet-1256283475.cos.ap-shanghai.myqcloud.com/models/aishell/20211025_conformer_exp.tar.gz
+tar zxvf 20211025_conformer_exp.tar.gz
+model_dir=$(pwd)/20211025_conformer_exp
+</pre></div>
+</div>
+</section>
+<section id="pytorch-to-onnx">
+<h2>二、模型转换–Pytorch to ONNX<a class="headerlink" href="#pytorch-to-onnx" title="此标题的永久链接">¶</a></h2>
+<p>​	若直接在Jetson模块上进行模型转换会出现内存不足的问题，模型转换工作需要移植到PC端完成</p>
+<p>​	首先将此前下载的<code class="docutils literal notranslate"><span class="pre">wenet/wenet</span></code>文件夹拷贝到项目文件下，里面提供了模型转换所需要的函数。需要将下载的torch模型转换为ONNX模型，使用到<code class="docutils literal notranslate"><span class="pre">wenet/bin/export_onnx_gpu.py</span></code>函数，模型转换的脚本export_onnx.sh：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+export CUDA_VISIBLE_DEVICES=&quot;0&quot;
+
+model_dir=20211025_conformer_exp
+onnx_model_dir=aishell_onnx
+
+mkdir -p $onnx_model_dir
+python wenet/bin/export_onnx_gpu.py \
+    --config=$model_dir/train.yaml  \
+    --checkpoint=$model_dir/final.pt  \
+    --cmvn_file=$model_dir/global_cmvn  \
+    --ctc_weight=0.5  \
+    --output_onnx_dir=$onnx_model_dir \
+    --fp16  \
+    --decoder_fastertransformer || exit 1
+
+cp $model_dir/words.txt $model_dir/train.yaml $onnx_model_dir
+</pre></div>
+</div>
+</section>
+<section id="fastertransformer">
+<h2>三、编译FasterTransformer<a class="headerlink" href="#fastertransformer" title="此标题的永久链接">¶</a></h2>
+<p>​	在Jetson Xavier NX板子上将上述生成的ONNX模型拷贝到板子的<code class="docutils literal notranslate"><span class="pre">wenet/runtime/gpu/tensorrt_fastertransformer</span></code>目录下，在<code class="docutils literal notranslate"><span class="pre">wenet/runtime/gpu/tensorrt_fastertransformer</span></code>目录下进行编译，编译脚本为compile_fastertransformer.sh：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+# path: {home}/wenet/runtime/gpu/tensorrt_fastertransformer
+
+mkdir -p exp1
+outputs_dir=./exp1
+ft_path=./FasterTransformer
+pushd ${ft_path}
+
+export TRT_LIBPATH=/usr/lib/aarch64-linux-gnu
+CUR_DIR=`pwd`
+mkdir -p build
+cd build
+
+cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_VERBOSE_MAKEFILE=OFF \
+  -DCMAKE_INSTALL_PREFIX=${CUR_DIR}/install \
+  -DBUILD_TF=OFF \
+  -DBUILD_PYT=OFF \
+  -DBUILD_MULTI_GPU=OFF \
+  -DUSE_NVTX=OFF \
+  -DBUILD_EXAMPLE=ON \
+  -DBUILD_TEST=OFF \
+  -DBUILD_TRT=ON \
+  -DBUILD_ORGIN_NET=OFF \
+  ..
+
+make -j6 || exit 1	# 根据实际CPU数目选择
+popd
+cp ${ft_path}/build/lib/libtrt_wenet.so $outputs_dir
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>四、提取权重<a class="headerlink" href="#id3" title="此标题的永久链接">¶</a></h2>
+<p>​	在<code class="docutils literal notranslate"><span class="pre">wenet/runtime/gpu/tensorrt_fastertransformer</span></code>目录下，运行脚本extract_weight_replace_plugins.sh，注意：模型在转换过程中需要读取ONNX图节点，需要使用pip安装onnx和onnx-graphsurgeon工具：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+onnx_model_dir=aishell_onnx
+d_model=256
+head_num=4
+vocab_size=4233
+outputs_dir=exp1
+
+mkdir -p /weight/enc
+mkdir -p /weight/dec
+python3 extract_weights.py --input_onnx $onnx_model_dir/encoder.onnx --output_dir /weight/enc || exit 1
+python3 extract_weights.py --input_onnx $onnx_model_dir/decoder.onnx --output_dir /weight/dec || exit 1
+
+python3 replace_plugin.py --input_onnx $onnx_model_dir/encoder.onnx \
+                       --d_model $d_model --head_num $head_num --vocab_size $vocab_size\
+                       --output_onnx ${outputs_dir}/encoder_plugin.onnx || exit 1
+python3 replace_plugin.py --input_onnx $onnx_model_dir/decoder.onnx \
+                       --output_onnx ${outputs_dir}/decoder_plugin.onnx \
+                       --d_model $d_model --head_num $head_num --vocab_size $vocab_size \
+                       --num_layer 6 || exit 1
+</pre></div>
+</div>
+<p><img alt="image-20230306171715205" src="../../_images/image-20230306171715205.png" /></p>
+<p><img alt="image-20230306171732676" src="../../_images/image-20230306171732676.png" /></p>
+</section>
+<section id="onnx-to-tensorrt">
+<h2>五、模型转换–ONNX to TensorRT<a class="headerlink" href="#onnx-to-tensorrt" title="此标题的永久链接">¶</a></h2>
+<p>​	使用trtexec工具，将ONNX模型转化为更易于推理的Tensorrt模型，转换脚本为onnx_tensorrt.sh：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+trtexec=/usr/src/tensorrt/bin/trtexec
+
+d_model=256
+BEAM_SIZE=10
+
+MIN_BATCH=1
+OPT_BATCH=16
+MAX_BATCH=16
+
+ENC_MIN_LEN=16
+ENC_OPT_LEN=512
+ENC_MAX_LEN=2048
+DEC_MIN_LEN=$(( ENC_MIN_LEN / 4))
+DEC_OPT_LEN=$(( ENC_OPT_LEN / 4))
+DEC_MAX_LEN=$(( ENC_MAX_LEN / 4))
+
+outputs_dir=./exp1
+cd $outputs_dir
+
+if [ ! -d /weight/enc ] || [ ! -d /weight/dec ]; then
+  echo &quot;Please extract weights and move them here first&quot;
+  exit 1
+fi
+
+echo &quot;convert to trt&quot;
+${trtexec} \
+    --onnx=./encoder_plugin.onnx \
+    --minShapes=speech:${MIN_BATCH}x${ENC_MIN_LEN}x80,speech_lengths:${MIN_BATCH} \
+    --optShapes=speech:${OPT_BATCH}x${ENC_OPT_LEN}x80,speech_lengths:${OPT_BATCH} \
+    --maxShapes=speech:${MAX_BATCH}x${ENC_MAX_LEN}x80,speech_lengths:${MAX_BATCH} \
+    --fp16 \
+    --plugins=./libtrt_wenet.so \
+    --saveEngine=./encoder.plan
+
+${trtexec}   \
+    --onnx=./decoder_plugin.onnx \
+    --minShapes=encoder_out:${MIN_BATCH}x${DEC_MIN_LEN}x$d_model,encoder_out_lens:${MIN_BATCH},hyps_pad_sos_eos:${MIN_BATCH}x${BEAM_SIZE}x${MIN_HYPS_PAD},hyps_lens_sos:${MIN_BATCH}x${BEAM_SIZE},ctc_score:${MIN_BATCH}x${BEAM_SIZE} \
+    --optShapes=encoder_out:${OPT_BATCH}x${DEC_OPT_LEN}x$d_model,encoder_out_lens:${OPT_BATCH},hyps_pad_sos_eos:${OPT_BATCH}x${BEAM_SIZE}x${OPT_HYPS_PAD},hyps_lens_sos:${OPT_BATCH}x${BEAM_SIZE},ctc_score:${OPT_BATCH}x${BEAM_SIZE} \
+    --maxShapes=encoder_out:${MAX_BATCH}x${DEC_MAX_LEN}x$d_model,encoder_out_lens:${MAX_BATCH},hyps_pad_sos_eos:${MAX_BATCH}x${BEAM_SIZE}x${MAX_HYPS_PAD},hyps_lens_sos:${MAX_BATCH}x${BEAM_SIZE},ctc_score:${MAX_BATCH}x${BEAM_SIZE} \
+    --fp16 \
+    --plugins=./libtrt_wenet.so \
+    --saveEngine=./decoder.plan \
+    --buildOnly
+    # infer with random input would cause illegal memory access error
+cd -
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>六、更新配置文件<a class="headerlink" href="#id4" title="此标题的永久链接">¶</a></h2>
+<p>​	自动更新模型仓库中config.pbtxt文件，对应的更新脚本为auto_gen_config.sh：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+onnx_model_dir=aishell_onnx
+d_model=256
+vocab_size=4233
+MAX_BATCH=16
+MAX_BATCH_FOR_SCORING=16
+
+dirs=&quot;encoder decoder feature_extractor scoring attention_rescoring&quot;
+DICT_PATH=$onnx_model_dir/words.txt
+VOCAB_SIZE=$vocab_size
+MAX_DELAY=0
+MAX_BATCH_SIZE=$MAX_BATCH
+D_MODEL=$d_model
+INSTANCE_NUM=1
+INSTANCE_NUM_FOR_SCORING=2
+model_repo_path=./model_repo_ft
+
+if [ ! -d $model_repo_path ]; then
+  echo &quot;Please cd to model_repo_path&quot;
+  exit 1
+fi
+
+for dir in $dirs
+do
+    cp $model_repo_path/$dir/config.pbtxt.template $model_repo_path/$dir/config.pbtxt
+
+    sed -i &quot;s|DICT_PATH|${DICT_PATH}|g&quot; $model_repo_path/$dir/config.pbtxt
+    sed -i &quot;s/BEAM_SIZE/${BEAM_SIZE}/g&quot; $model_repo_path/$dir/config.pbtxt
+    sed -i &quot;s/VOCAB_SIZE/${VOCAB_SIZE}/g&quot; $model_repo_path/$dir/config.pbtxt
+    sed -i &quot;s/MAX_DELAY/${MAX_DELAY}/g&quot; $model_repo_path/$dir/config.pbtxt
+    sed -i &quot;s/D_MODEL/${D_MODEL}/g&quot; $model_repo_path/$dir/config.pbtxt
+    if [ &quot;$dir&quot; == &quot;decoder&quot; ]; then
+         sed -i &quot;s/MAX_BATCH/${MAX_BATCH_FOR_SCORING}/g&quot; $model_repo_path/$dir/config.pbtxt
+         sed -i &quot;s/INSTANCE_NUM/${INSTANCE_NUM}/g&quot; $model_repo_path/$dir/config.pbtxt
+    elif [ &quot;$dir&quot; == &quot;scoring&quot; ]; then
+         sed -i &quot;s/MAX_BATCH/${MAX_BATCH_FOR_SCORING}/g&quot; $model_repo_path/$dir/config.pbtxt
+         sed -i &quot;s/INSTANCE_NUM/${INSTANCE_NUM_FOR_SCORING}/g&quot; $model_repo_path/$dir/config.pbtxt
+    else
+         sed -i &quot;s/MAX_BATCH/${MAX_BATCH_SIZE}/g&quot; $model_repo_path/$dir/config.pbtxt
+         sed -i &quot;s/INSTANCE_NUM/${INSTANCE_NUM}/g&quot; $model_repo_path/$dir/config.pbtxt
+    fi
+done
+</pre></div>
+</div>
+</section>
+<section id="tensorrt">
+<h2>七、加载TensorRT模型<a class="headerlink" href="#tensorrt" title="此标题的永久链接">¶</a></h2>
+<p>​	将生成的encoder.plan和decoder.plan更新到模型仓库中，并添加MD5校验，加载的脚本为load_model.sh：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+model_repo_path=./model_repo_ft
+outputs_dir=./exp1
+
+mkdir -p $model_repo_path/encoder/1/
+cp $outputs_dir/encoder.plan $model_repo_path/encoder/1/
+encoder_md5=`md5sum $model_repo_path/encoder/1/encoder.plan | awk &#39;{ print $1 }&#39;`
+sed -i &quot;s|ENCODER_MD5|${encoder_md5}|g&quot; $model_repo_path/encoder/config.pbtxt
+
+mkdir -p $model_repo_path/decoder/1/
+cp $outputs_dir/decoder.plan $model_repo_path/decoder/1/
+decoder_md5=`md5sum $model_repo_path/decoder/1/decoder.plan | awk &#39;{ print $1 }&#39;`
+sed -i &quot;s|DECODER_MD5|${decoder_md5}|g&quot; $model_repo_path/decoder/config.pbtxt
+
+mkdir -p $model_repo_path/attention_rescoring/1/
+cp $outputs_dir/libtrt_wenet.so $model_repo_path/../
+</pre></div>
+</div>
+<p><strong>启动Triton推理服务器加载模型</strong></p>
+<p>​	启动Triton部署语音识别服务端，<a class="reference external" href="http://xn--infer-dq1hr8xm9c935djc6azly.sh">启动的脚本为infer.sh</a>：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+echo &quot;launch triton server&quot;
+model_repo_path=./model_repo_ft
+LD_PRELOAD=./libtrt_wenet.so tritonserver --model-repository $model_repo_path \
+    --backend-directory=/home/lzl/lzl/tritonserver2.20.0-jetpack5.0/backends --model-control-mode=poll
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/image-20230306171552132.png" /></p>
+</section>
+</section>
+
+</main>
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>深度学习环境配置
+    </a>
+    <a class="float-right" href="04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html" title="Next">
+        客户端模型推理 <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
+                    </div>
+                    
+                    <nav class="col-12 col-lg-3 pb-4">
+                        <div class="sticky-top toc page-toc" aria-labelledby="page-toc-heading">
+                            <p class="font-weight-bold" id="page-toc-heading">Page contents</p>
+                            <ul>
+<li><a class="reference internal" href="#">语音识别模型部署</a><ul>
+<li><a class="reference internal" href="#id2">一、模型准备</a></li>
+<li><a class="reference internal" href="#pytorch-to-onnx">二、模型转换–Pytorch to ONNX</a></li>
+<li><a class="reference internal" href="#fastertransformer">三、编译FasterTransformer</a></li>
+<li><a class="reference internal" href="#id3">四、提取权重</a></li>
+<li><a class="reference internal" href="#onnx-to-tensorrt">五、模型转换–ONNX to TensorRT</a></li>
+<li><a class="reference internal" href="#id4">六、更新配置文件</a></li>
+<li><a class="reference internal" href="#tensorrt">七、加载TensorRT模型</a></li>
+</ul>
+</li>
+</ul>
+
+                        </div>
+                    </nav>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-primary text-light">
+        <div class="container">
+            <div class="row">
+        <div class="col p-4">
+            
+                <nav aria-label="Footer">
+                    <ul class="nav justify-content-center mb-2">
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/features/">Features</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/about-wagtail/"> About Wagtail</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/services/"> Services</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/blog/"> Blog</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/packages/"> Packages</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/developers/"> Developers</a></li>
+                        
+                    </ul>
+                </nav>
+            
+            <div class="text-center">
+                <p style="display: none">
+                    <a class="text-light" href="https://github.com/wagtail/sphinx_wagtail_theme" rel="nofollow" target="_blank">
+                        Wagtail Sphinx Theme 6.0.0
+                    </a>
+                </p>
+            </div>
+            <div class="text-center">
+                    &copy; Copyright 2023, 李仲亮
+            </div>
+        </div>
+    </div>
+        </div>
+    </footer>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="../../_static/dist/theme.js"></script>
+        <script type="text/javascript" src="../../_static/dist/vendor.js"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() { Search.loadIndex("../../searchindex.js"); });
+        </script>
+        <script type="text/javascript" id="searchindexloader"></script>
+    </body>
+</html>

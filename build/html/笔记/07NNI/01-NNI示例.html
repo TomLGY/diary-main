@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+        <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>NNI 示例 &mdash; SphinxDiary v1.0 文档</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/dist/fontawesome.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dist/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+            <link rel="index" title="索引" href="../../genindex.html" />
+            <link rel="search" title="搜索" href="../../search.html" />
+            <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="up" title="NNI" href="../7-index.html" />
+            <link rel="next" title="NNI 部署" href="02-NNI%E9%83%A8%E7%BD%B2.html" />
+            <link rel="prev" title="NNI" href="../7-index.html" />
+    </head>
+<body>
+    <script type="text/javascript" src="../../_static/dist/blocking.js"></script>
+    <header class="container-fluid bg-primary">
+        <a class="btn btn-sm btn-light skip-to-content-link" href="#main">Skip to content</a>
+        <div class="container-fluid">
+            <div class="navbar navbar-expand-lg navbar-dark font-weight-bold">
+                    <a href="../../index.html"
+                        title="Wagtail"
+                        class="logo navbar-brand"
+                    >
+                        <img src="../../_static/img/wagtail-logo-new.svg" width="45" height="59" alt="Wagtail"
+                            class="logo-img"
+                        />
+                        Sphinx Wagtail Theme
+                    </a>
+                
+                
+                <button class="navbar-toggler btn btn-primary d-lg-none" type="button" data-toggle="collapse" data-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="sr-only">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-12 col-lg-3 sidebar-container">
+                <div id="collapseSidebar" class="collapse sticky-top d-lg-block pt-5 pr-lg-4">
+<div id="searchbox" class="searchbox mb-6 px-1" role="search">
+    <form id="search-form" action="../../search.html" autocomplete="off" method="get" role="search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text border-right-0 bg-white py-3 pl-3 pr-2"><span class="fas fa-search"></span></div>
+            </div>
+            <input class="form-control py-3 pr-3 pl-1 h-100 border-left-0" type="search" name="q" placeholder="Search documentation" aria-label="Search documentation" id="searchinput" />
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div><div class="site-toc">
+    <nav class="toc mt-3" aria-label="Main menu">
+        <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-index.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01Docker/03Docker%E5%AE%B9%E5%99%A8%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB.html">Docker容器备份与迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-index.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/01%E5%9C%A8Ubuntu18.04%E4%B8%8A%E6%90%AD%E5%BB%BAkubernetes.html">kubernetes安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/02%E4%BD%BF%E7%94%A8MIG%E5%92%8CKubernetes%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2NVIDIA%20Triton.html">Kubernetes部署NVIDIA Triton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/03%E4%BD%BF%E7%94%A8Kubernetes%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4.html">Kubernetes创建集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/04Triton%20Metrics.html">Triton Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02Triton_with_kubernetes/05Grafana.html">Grafana</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-index.html">Triton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03Triton/01Triton_Inference_Server%E5%85%A5%E9%97%A8.html">Triton Inference Server入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03Triton/02Triton%E5%85%A5%E9%97%A8%E7%BA%A7%E6%95%99%E7%A8%8B.html">Triton入门级教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03Triton/03Triton_Backend%E8%AF%A6%E8%A7%A3.html">Triton_Backend详解</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4-index.html">Pytorch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04Pytorch/01%E6%95%B0%E6%8D%AE%E9%9B%86.html">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5-index.html">语音识别环境部署教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/01jetpack5.0.2%E5%AE%89%E8%A3%85.html">Jetpack 5.0.2安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html">深度学习环境配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/03%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2.html">语音识别模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html">客户端模型推理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/05%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.html">性能测试</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6-index.html">小工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/01Git.html">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/2-index.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/01GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（一）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/02GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（二）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/03Markdown.html">Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/04MyST-Parser.html">MyST-Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/03Fastertransformer.html">Fastertransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/04FileBrowser.html">FileBrowser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/05NFS%E9%85%8D%E7%BD%AE.html">NFS配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/06%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">服务器文件管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06%E5%B0%8F%E5%B7%A5%E5%85%B7/07StableDiffusion.html">Stable Diffusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../7-index.html">NNI</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NNI 示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02-NNI%E9%83%A8%E7%BD%B2.html">NNI 部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8-index.html">Android</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../08Android/01Android%20APK.html">Android APK</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">论文:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/1-index.html">Fine tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/01Prompt%20Tuning.html">Prompt Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/02Prompt%20Tuning%20v2.html">Prompt Tuning V2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/03Lora.html">LoRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/01Fine_tuning/04ChatGLM%E5%BE%AE%E8%B0%83%E5%AE%9E%E9%AA%8C.html">ChatGLM微调实验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/2-index.html">语音识别</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/1-index.html">语音识别综述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/1-Recent%20Advance%20in%20End-to-End%20Automatic%20Speech%20Recognition.html">1-Recent Advance in End-to-End Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/2-A%20Comparative%20Study%20On%20Transformer%20VS%20RNN%20In%20Speech%20Applications.html">2-A Comparative Study On Transformer VS RNN In Speech Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/2-index.html">Wenet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/1-WeNet%20Production%20Oriented%20Streaming%20and%20Non-Streaming%20End-to-End%20Speech%20Recognition%20Toolkit.html">1-WeNet Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/2-WeNet2.0%20More%20Productive%20End-to-End%20Speech%20Recognition%20Toolkit.html">2-Wenet2.0 More Productive End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/3-WeNet-LM%E6%A8%A1%E5%9E%8B.html">3-WeNet-LM模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html">4-Wenet模型结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html">5-WeNet实验小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/6-WeNet%E9%83%A8%E7%BD%B2.html">6-WeNet部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/3-index.html">模型微调</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/03%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/1-FINE-TUNING%20OF%20PRE-TRAINED%20END-TO-END%20SPEECH%20RECOGNITION%20WITH%20GENERATIVE%20ADVERSARIAL%20NETWORKS.html">1-Fine-Tuning Of Pre-trained end-to-end Speech Recognition With Generative Adversarial Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/4-index.html">编码器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/1-Conformer-Convolution-augmented%20Transformer%20for%20Speech%20Recognition.html">1-Conformer-Convolution-augmented Transformer for Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/2-Paraformer-Fast%20and%20Accurate%20Parallel%20Transformer%20for%20Non-autoregressive.html">2-Paraformer-Fast and Accurate Parallel Transformer for Non-autoregressive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html">3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/4-Squeezeformer-An%20Efficient%20Transformer%20for%20Automatic%20Speech%20Recognition.html">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/3-index.html">联邦学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/1-index.html">联邦学习项目</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/01%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/1-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">联邦学习开源项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/4-index.html">语言模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../%E8%AE%BA%E6%96%87/04%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/1-Transformer-XL-Attention%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.html">1-Transformer-XL-Attention Language Models Beyond a Fixed-Length Context</a></li>
+</ul>
+</li>
+</ul>
+
+    </nav>
+    <template data-toggle-item-template>
+        <button class="btn btn-sm btn-link toctree-expand" type="button">
+            <span class="sr-only">Toggle menu contents</span>
+        </button>
+    </template>
+</div>
+                    <div class="d-lg-none border-bottom">
+                        
+                    </div>
+                </div>
+            </aside>
+            <div class="col-12 col-lg-9 pt-5">
+                <header class="row align-items-baseline">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-0 p-0 bg-transparent">
+        <li class="breadcrumb-item"><a href="../../index.html">Docs</a></li>
+            <li class="breadcrumb-item"><a href="../7-index.html">NNI</a></li>
+        <li class="breadcrumb-item active" aria-current="page">NNI 示例</li>
+    </ol>
+</nav>
+                    </div>
+                    <div class="col-sm-12 col-lg-auto mt-3 mt-lg-3">
+                        <noscript>
+                            <p>JavaScript is required to toggle light/dark mode..</p>
+                        </noscript>
+                        <button id="wagtail-theme" class="btn btn-sm btn-light text-decoration-none" type="button">
+                            <span class="dark-only"><i class="fas fa-sun"></i> Light mode</span>
+                            <span class="light-only"><i class="fas fa-moon"></i> Dark mode</span>
+                        </button>
+    <a class="btn btn-sm btn-light text-decoration-none" href="https://github.com/wagtail/sphinx_wagtail_theme/blob/main/docs/笔记/07NNI/01-NNI示例.md" rel="nofollow">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
+    <a class="btn btn-sm btn-light text-decoration-none" href="../../_sources/笔记/07NNI/01-NNI示例.md.txt" rel="nofollow">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+                        
+                    </div>
+                </header>
+                <div class="row" >
+                    <div class="col-12">
+                        <hr class="w-100 my-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
+                        <main role="main" id="main">
+    <section class="tex2jax_ignore mathjax_ignore" id="nni">
+<h1>NNI 示例<a class="headerlink" href="#nni" title="此标题的永久链接">¶</a></h1>
+<p>NNI 是一个强大的自动化工作，可以帮助用户自动化部署神经网络模型，主要包括：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nni.readthedocs.io/zh/stable/hpo/overview.html">超参调优</a></p></li>
+<li><p><a class="reference external" href="https://nni.readthedocs.io/zh/stable/nas/overview.html">架构搜索</a></p></li>
+<li><p><a class="reference external" href="https://nni.readthedocs.io/zh/stable/compression/overview.html">模型压缩</a></p></li>
+<li><p><a class="reference external" href="https://nni.readthedocs.io/zh/stable/feature_engineering/overview.html">特征工程</a></p></li>
+</ul>
+<p>安装非常简单：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nni</span>
+</pre></div>
+</div>
+<p>NNI 使得自动机器学习技术即插即用，提供训练平台，可降低自动机器学习实验管理成本</p>
+<section id="id1">
+<h2>一、NNI模型压缩<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h2>
+<p>典型的神经网络是计算和能源密集型的，很难将其部署在计算资源匮乏 或具有严格延迟要求的设备上，一个自然的想法就是对模型进行压缩， 以减小模型大小并加速模型推理，同时不会显着降低模型性能。可通过剪枝和量化实现，剪枝方法探索模型权重中的冗余， 并尝试删除/修剪冗余和非关键的权重；量化是指通过减少权重表示或激活所需的比特数来压缩模型。</p>
+<p><img alt="" src="../../_images/prune_quant.jpg" /></p>
+<p>支持 TensorFlow 和 Pytorch，NNI 内置了一些主流的模型压缩算法，另外用户可以使用 NNI 接口定义新的压缩算法。</p>
+<p>对于一个具体的神经网络压缩流程，可以单独或联合使用剪枝或量化，采用串行方式同时应用这两种模式</p>
+<p><img alt="" src="../../_images/compression_pipeline.png" /></p>
+<section id="id2">
+<h3>1.1. NNI 模型剪枝<a class="headerlink" href="#id2" title="此标题的永久链接">¶</a></h3>
+<section id="id3">
+<h4>概述<a class="headerlink" href="#id3" title="此标题的永久链接">¶</a></h4>
+<p>剪枝方法探索模型权重（参数）中的冗余，并试图去除/修剪冗余和非关键权重，冗余参数的值为 0，确保其不会参与反向传播。目标是在哪里应用稀疏性，大多对权重进行修剪，以减小模型大小并加速推理速度，NNI 目前仅支持权重剪枝。</p>
+<p>Basic 剪枝器：针对确定的稀疏率为每个权重生成掩码；</p>
+<p>Scheduled 剪枝器：确定如何为每个修剪目标确定稀疏率，还具有模型加速和微调的功能，Scheduled 剪枝器的任务流如下图所示：</p>
+<p><img alt="" src="../../_images/image-20230620213857817.png" /></p>
+</section>
+<section id="quick-start">
+<h4>Quick Start<a class="headerlink" href="#quick-start" title="此标题的永久链接">¶</a></h4>
+<p>模型剪枝入门，主要做法如下：</p>
+<ol class="arabic simple">
+<li><p>训练一个模型 -&gt; 对模型进行剪枝 -&gt; 对剪枝后的模型进行微调</p></li>
+<li><p>在模型训练过程中剪枝 -&gt; 对剪枝后的模型进行微调</p></li>
+<li><p>对模型进行剪枝 -&gt; 重新训练剪枝后的模型</p></li>
+</ol>
+<p>使用一个简单模型在 MNIST 数据集上训练</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># 输入维度为1，输出维度为20，卷积核大小为5*5，步幅为1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>该模型包含两个2D卷积核两个前馈网络</p>
+</section>
+<section id="id4">
+<h4>剪枝器<a class="headerlink" href="#id4" title="此标题的永久链接">¶</a></h4>
+<p>使用 config_list 定义需要剪枝的参数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_list</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s1">&#39;sparsity_per_layer&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s1">&#39;op_types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span> <span class="s1">&#39;Conv2d&#39;</span><span class="p">]</span>
+    <span class="p">},</span> <span class="p">{</span>
+    <span class="s1">&#39;exclude&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;op_names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fc2&#39;</span><span class="p">]</span>
+<span class="p">}]</span>
+</pre></div>
+</div>
+<p>该设置表明修剪类型为 Linear 或 Conv2d 的所有层，除了 fc2，该层与模型输出有关，fc2 设置为 exclude，稀释率为 50%。</p>
+<p>剪枝器的模型结构为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Net</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">conv1</span><span class="p">):</span> <span class="n">PrunerModuleWrapper</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">module</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">)</span>
+  <span class="p">(</span><span class="n">conv2</span><span class="p">):</span> <span class="n">PrunerModuleWrapper</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">module</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">)</span>
+  <span class="p">(</span><span class="n">fc1</span><span class="p">):</span> <span class="n">PrunerModuleWrapper</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">module</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="p">(</span><span class="n">fc2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h4>加速<a class="headerlink" href="#id5" title="此标题的永久链接">¶</a></h4>
+<p>使用 NNI 的模型加速功能和剪枝器生成好的 masks 对原始模型进行加速，注意 ModelSpeedup 需要 unwrapped 的模型。 模型会在加速之后真正的在规模上变小，并且可能会达到相比于 masks 更大的稀疏率，这是因为 ModelSpeedup 会自动在模型中传播稀疏， 识别由于掩码带来的冗余权重。</p>
+<p>加速后的模型结构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Net</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">conv1</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">conv2</span><span class="p">):</span> <span class="n">Conv2d</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">fc1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">fc2</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>可以发现和一开始的模型结构有些许不同，模型中间的 50% 的神经元被裁剪掉了</p>
+<p>原始模型大小为：1.686MB，剪枝后的模型大小为：429MB，剪枝后的模型相较于原模型大小压缩了4倍</p>
+<p>原始模型的识别准确率为：98%，剪枝后模型的识别准确率为：91%，具有较大的损失，后续需要结合模型微调。</p>
+</section>
+</section>
+<section id="transformer">
+<h3>1.2 剪枝 Transformer<a class="headerlink" href="#transformer" title="此标题的永久链接">¶</a></h3>
+<section id="id6">
+<h4>工作流<a class="headerlink" href="#id6" title="此标题的永久链接">¶</a></h4>
+<p>整个剪枝过程可分为以下步骤：</p>
+<ol class="arabic simple">
+<li><p>对下游任务的预训练模型进行微调。根据我们的经验，在微调模型上修剪的最终性能比直接在预训练模型上修剪要好。同时，在这一步骤中获得的微调模型也将用作后续蒸馏训练的教师模型</p></li>
+<li><p>首先修剪注意力层。在这里，我们在注意力层权重上应用块稀疏，如果头部被完全掩蔽，则直接修剪头部（压缩权重）。如果头部被部分遮盖，我们将不会对其进行修剪并恢复其权重</p></li>
+<li><p>用蒸馏法重新训练修剪过的模型。在修剪FFN层之前恢复模型精度</p></li>
+<li><p>修剪FFN层。这里，我们在第一FFN层上应用输出通道修剪，并且第二FFN层输入通道将由于第一层输出信道的修剪而被修剪。</p></li>
+<li><p>使用蒸馏来重新训练得到最终修剪后的模型</p></li>
+</ol>
+<p>在修剪 Transformer 的过程中，我们获得了以下经验</p>
+<ul class="simple">
+<li><p>我们在步骤 2 中使用 Movement 修剪器，在步骤4中使用 Taylor FO 权重修剪器。Movement 修剪器在注意层上具有良好的性能，Taylor FO 权重修剪器在 FFN 层上具有较好的性能。这两个修剪器都是一些基于梯度的修剪算法，我们也尝试了基于权重的修剪算法（如 L1 范数修剪器），但在这种情况下似乎效果不佳</p></li>
+<li><p>蒸馏是恢复模型精度的好方法。就结果而言，当我们对 MNLI 任务进行修剪时，通常可以在精度上提高 1~2%。</p></li>
+<li><p>有必要逐渐增加稀疏性，而不是一次达到非常高的稀疏性</p></li>
+</ul>
+<section id="id7">
+<h5>实验准备<a class="headerlink" href="#id7" title="此标题的永久链接">¶</a></h5>
+<p>完整的剪枝过程将在 A100 上花费 8 小时</p>
+<p>本节将获得关于下游任务的微调模型：</p>
+<p>下载 bert-base-uncased，目录位于<code class="docutils literal notranslate"><span class="pre">./bert-base-uncased</span></code>：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">lfs</span> <span class="n">install</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">huggingface</span><span class="o">.</span><span class="n">co</span><span class="o">/</span><span class="n">bert</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">uncased</span>
+</pre></div>
+</div>
+<p>下载 GLUE 数据集，任务名称为 MNLI，目录位于 <code class="docutils literal notranslate"><span class="pre">/data</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">huggingface</span><span class="o">.</span><span class="n">co</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">glue</span>
+</pre></div>
+</div>
+<p>代码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bert/dataLoader.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">prepare_dataloaders</span></code>：用于加载 bert 模型和 MNLI 任务数据集，返回 train_dataloader 和 validation_dataloader</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bert/train.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">training</span></code>：训练 bert 模型用于模型微调</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distillation_training</span></code>：用于 FFN 剪枝的蒸馏重训练</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bert/eval.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">evaluation</span></code>：使用 validation_dataloaders 用于评估模型</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bert/load_model.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_pretrained_model</span></code>：用于加载 bert 预训练模型</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_pretrained_model</span></code>：将加载的预训练模型用于模型微调</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bert/loss.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">fake_criterion</span></code>：</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distil_loss_func</span></code>：计算蒸馏损失</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bert/pruner.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">movement_pruner</span></code>：对注意力模块执行 movement 剪枝，提取注意力掩码矩阵</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attention_pruner</span></code>：对已剪枝的注意力模块进行蒸馏重训练</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>在评估过程中使用了 functools 函数，其基于已有函数定义新的函数，其输入是函数，输出也是函数。其 partial 方法使用可以固定函数的某些输入参数，新定义的函数仅需要输入原始函数的部分参数</p>
+</div></blockquote>
+<p>微调测试结果位于：<code class="docutils literal notranslate"><span class="pre">pruning_log/bert-base-uncased/mnli/pruning_bert_mnli/finetuning_on_downstream.log</span></code></p>
+<p>生成的微调模型位于：<code class="docutils literal notranslate"><span class="pre">models/bert-base/uncased/mnli/finetuned_model_state.pth</span></code></p>
+</section>
+<section id="id8">
+<h5>模型剪枝<a class="headerlink" href="#id8" title="此标题的永久链接">¶</a></h5>
+<p>根据经验，分阶段剪枝注意力部分和 FFN 部分能更容易获得良好的效果。当然，一起剪枝也可以达到类似的效果，但需要更多的参数调整测试，在本节使用分阶段修剪方式：</p>
+<p>首先，使用 Movement Pruner 修剪注意力层：</p>
+<p>加载已有的微调模型：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">finetuned_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">finetuned_model_state_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>设置 Movement 剪枝器，对注意力层进行剪枝，剪枝配置器：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_list</span> <span class="o">=</span> <span class="p">[{</span>
+	<span class="s1">&#39;op_types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">],</span>
+	<span class="s1">&#39;op_partial_names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;bert.encoder.layer.</span><span class="si">{}</span><span class="s1">.attention&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layers_num</span><span class="p">)],</span>
+	<span class="s1">&#39;sparsity&#39;</span><span class="p">:</span> <span class="mf">0.1</span>
+<span class="p">}]</span>
+</pre></div>
+</div>
+<p>加载一个新的微调模型来进行加速，可以视为使用微调状态来初始化修建后的模型权重。注意，NNI 加速不支持替换注意力模块，需要手动替换注意力模块。</p>
+<p>如果头部是完全掩蔽的，则进行物理修剪，并为 FFN 创建 config_list</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ffn_config_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+	<span class="s1">&#39;op_names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;bert.encoder.layer</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_remained_idxs</span><span class="p">)</span><span class="si">}</span><span class="s1">.intermediate.dense&#39;</span><span class="p">],</span>
+	<span class="s1">&#39;sparsity&#39;</span><span class="p">:</span> <span class="n">sparsity_per_iter</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>加载注意力掩码矩阵并确定需要裁剪的注意力头部编号，bert 网络有 12 个注意力头：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="mi">0</span> <span class="n">prune</span> <span class="mi">4</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">1</span> <span class="n">prune</span> <span class="mi">7</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">2</span> <span class="n">prune</span> <span class="mi">7</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">3</span> <span class="n">prune</span> <span class="mi">5</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">4</span> <span class="n">prune</span> <span class="mi">7</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">5</span> <span class="n">prune</span> <span class="mi">5</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">6</span> <span class="n">prune</span> <span class="mi">6</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">7</span> <span class="n">prune</span> <span class="mi">7</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">8</span> <span class="n">prune</span> <span class="mi">9</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">9</span> <span class="n">prune</span> <span class="mi">8</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">10</span> <span class="n">prune</span> <span class="mi">9</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">layer</span> <span class="mi">11</span> <span class="n">prune</span> <span class="mi">7</span> <span class="n">head</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>使用 TaylorWeightPruner 在 12 次迭代中对 FFN 进行修剪，在每次修剪迭代后微调3000步，然后再修剪完成后微调 2 个 epochs</p>
+<p>NNI 将来将支持逐步修剪调度，然后可以使用修剪器替换掉代码：</p>
+</section>
+</section>
+</section>
+</section>
+<section id="id9">
+<h2>二、NNI模型量化<a class="headerlink" href="#id9" title="此标题的永久链接">¶</a></h2>
+</section>
+</section>
+
+</main>
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="../7-index.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>NNI
+    </a>
+    <a class="float-right" href="02-NNI%E9%83%A8%E7%BD%B2.html" title="Next">
+        NNI 部署 <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
+                    </div>
+                    
+                    <nav class="col-12 col-lg-3 pb-4">
+                        <div class="sticky-top toc page-toc" aria-labelledby="page-toc-heading">
+                            <p class="font-weight-bold" id="page-toc-heading">Page contents</p>
+                            <ul>
+<li><a class="reference internal" href="#">NNI 示例</a><ul>
+<li><a class="reference internal" href="#id1">一、NNI模型压缩</a><ul>
+<li><a class="reference internal" href="#id2">1.1. NNI 模型剪枝</a><ul>
+<li><a class="reference internal" href="#id3">概述</a></li>
+<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li><a class="reference internal" href="#id4">剪枝器</a></li>
+<li><a class="reference internal" href="#id5">加速</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#transformer">1.2 剪枝 Transformer</a><ul>
+<li><a class="reference internal" href="#id6">工作流</a><ul>
+<li><a class="reference internal" href="#id7">实验准备</a></li>
+<li><a class="reference internal" href="#id8">模型剪枝</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">二、NNI模型量化</a></li>
+</ul>
+</li>
+</ul>
+
+                        </div>
+                    </nav>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-primary text-light">
+        <div class="container">
+            <div class="row">
+        <div class="col p-4">
+            
+                <nav aria-label="Footer">
+                    <ul class="nav justify-content-center mb-2">
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/features/">Features</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/about-wagtail/"> About Wagtail</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/services/"> Services</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/blog/"> Blog</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/packages/"> Packages</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/developers/"> Developers</a></li>
+                        
+                    </ul>
+                </nav>
+            
+            <div class="text-center">
+                <p style="display: none">
+                    <a class="text-light" href="https://github.com/wagtail/sphinx_wagtail_theme" rel="nofollow" target="_blank">
+                        Wagtail Sphinx Theme 6.0.0
+                    </a>
+                </p>
+            </div>
+            <div class="text-center">
+                    &copy; Copyright 2023, 李仲亮
+            </div>
+        </div>
+    </div>
+        </div>
+    </footer>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="../../_static/dist/theme.js"></script>
+        <script type="text/javascript" src="../../_static/dist/vendor.js"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() { Search.loadIndex("../../searchindex.js"); });
+        </script>
+        <script type="text/javascript" id="searchindexloader"></script>
+    </body>
+</html>

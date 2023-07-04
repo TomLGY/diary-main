@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+        <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>5-WeNet实验小结 &mdash; SphinxDiary v1.0 文档</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/dist/fontawesome.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/dist/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+            <link rel="index" title="索引" href="../../../genindex.html" />
+            <link rel="search" title="搜索" href="../../../search.html" />
+            <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="up" title="Wenet" href="../2-index.html" />
+            <link rel="next" title="6-WeNet部署" href="6-WeNet%E9%83%A8%E7%BD%B2.html" />
+            <link rel="prev" title="4-Wenet模型结构" href="4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html" />
+    </head>
+<body>
+    <script type="text/javascript" src="../../../_static/dist/blocking.js"></script>
+    <header class="container-fluid bg-primary">
+        <a class="btn btn-sm btn-light skip-to-content-link" href="#main">Skip to content</a>
+        <div class="container-fluid">
+            <div class="navbar navbar-expand-lg navbar-dark font-weight-bold">
+                    <a href="../../../index.html"
+                        title="Wagtail"
+                        class="logo navbar-brand"
+                    >
+                        <img src="../../../_static/img/wagtail-logo-new.svg" width="45" height="59" alt="Wagtail"
+                            class="logo-img"
+                        />
+                        Sphinx Wagtail Theme
+                    </a>
+                
+                
+                <button class="navbar-toggler btn btn-primary d-lg-none" type="button" data-toggle="collapse" data-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="sr-only">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-12 col-lg-3 sidebar-container">
+                <div id="collapseSidebar" class="collapse sticky-top d-lg-block pt-5 pr-lg-4">
+<div id="searchbox" class="searchbox mb-6 px-1" role="search">
+    <form id="search-form" action="../../../search.html" autocomplete="off" method="get" role="search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text border-right-0 bg-white py-3 pl-3 pr-2"><span class="fas fa-search"></span></div>
+            </div>
+            <input class="form-control py-3 pr-3 pl-1 h-100 border-left-0" type="search" name="q" placeholder="Search documentation" aria-label="Search documentation" id="searchinput" />
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div><div class="site-toc">
+    <nav class="toc mt-3" aria-label="Main menu">
+        <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/1-index.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/03Docker%E5%AE%B9%E5%99%A8%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB.html">Docker容器备份与迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/2-index.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/01%E5%9C%A8Ubuntu18.04%E4%B8%8A%E6%90%AD%E5%BB%BAkubernetes.html">kubernetes安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/02%E4%BD%BF%E7%94%A8MIG%E5%92%8CKubernetes%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2NVIDIA%20Triton.html">Kubernetes部署NVIDIA Triton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/03%E4%BD%BF%E7%94%A8Kubernetes%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4.html">Kubernetes创建集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/04Triton%20Metrics.html">Triton Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/05Grafana.html">Grafana</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/3-index.html">Triton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/01Triton_Inference_Server%E5%85%A5%E9%97%A8.html">Triton Inference Server入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/02Triton%E5%85%A5%E9%97%A8%E7%BA%A7%E6%95%99%E7%A8%8B.html">Triton入门级教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/03Triton_Backend%E8%AF%A6%E8%A7%A3.html">Triton_Backend详解</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/4-index.html">Pytorch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/04Pytorch/01%E6%95%B0%E6%8D%AE%E9%9B%86.html">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/5-index.html">语音识别环境部署教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/01jetpack5.0.2%E5%AE%89%E8%A3%85.html">Jetpack 5.0.2安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html">深度学习环境配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/03%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2.html">语音识别模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html">客户端模型推理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/05%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.html">性能测试</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/6-index.html">小工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/01Git.html">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/2-index.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/01GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（一）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/02GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（二）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/03Markdown.html">Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/04MyST-Parser.html">MyST-Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/03Fastertransformer.html">Fastertransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/04FileBrowser.html">FileBrowser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/05NFS%E9%85%8D%E7%BD%AE.html">NFS配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/06%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">服务器文件管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/07StableDiffusion.html">Stable Diffusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/7-index.html">NNI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/01-NNI%E7%A4%BA%E4%BE%8B.html">NNI 示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/02-NNI%E9%83%A8%E7%BD%B2.html">NNI 部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/8-index.html">Android</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/08Android/01Android%20APK.html">Android APK</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">论文:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../1-index.html">Fine tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/01Prompt%20Tuning.html">Prompt Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/02Prompt%20Tuning%20v2.html">Prompt Tuning V2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/03Lora.html">LoRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/04ChatGLM%E5%BE%AE%E8%B0%83%E5%AE%9E%E9%AA%8C.html">ChatGLM微调实验</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../2-index.html">语音识别</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1-index.html">语音识别综述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/1-Recent%20Advance%20in%20End-to-End%20Automatic%20Speech%20Recognition.html">1-Recent Advance in End-to-End Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/2-A%20Comparative%20Study%20On%20Transformer%20VS%20RNN%20In%20Speech%20Applications.html">2-A Comparative Study On Transformer VS RNN In Speech Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../2-index.html">Wenet</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1-WeNet%20Production%20Oriented%20Streaming%20and%20Non-Streaming%20End-to-End%20Speech%20Recognition%20Toolkit.html">1-WeNet Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2-WeNet2.0%20More%20Productive%20End-to-End%20Speech%20Recognition%20Toolkit.html">2-Wenet2.0 More Productive End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3-WeNet-LM%E6%A8%A1%E5%9E%8B.html">3-WeNet-LM模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html">4-Wenet模型结构</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5-WeNet实验小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6-WeNet%E9%83%A8%E7%BD%B2.html">6-WeNet部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-index.html">模型微调</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/1-FINE-TUNING%20OF%20PRE-TRAINED%20END-TO-END%20SPEECH%20RECOGNITION%20WITH%20GENERATIVE%20ADVERSARIAL%20NETWORKS.html">1-Fine-Tuning Of Pre-trained end-to-end Speech Recognition With Generative Adversarial Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4-index.html">编码器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/1-Conformer-Convolution-augmented%20Transformer%20for%20Speech%20Recognition.html">1-Conformer-Convolution-augmented Transformer for Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/2-Paraformer-Fast%20and%20Accurate%20Parallel%20Transformer%20for%20Non-autoregressive.html">2-Paraformer-Fast and Accurate Parallel Transformer for Non-autoregressive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html">3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04%E7%BC%96%E7%A0%81%E5%99%A8/4-Squeezeformer-An%20Efficient%20Transformer%20for%20Automatic%20Speech%20Recognition.html">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../3-index.html">联邦学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/1-index.html">联邦学习项目</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/01%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/1-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">联邦学习开源项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../4-index.html">语言模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/1-Transformer-XL-Attention%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.html">1-Transformer-XL-Attention Language Models Beyond a Fixed-Length Context</a></li>
+</ul>
+</li>
+</ul>
+
+    </nav>
+    <template data-toggle-item-template>
+        <button class="btn btn-sm btn-link toctree-expand" type="button">
+            <span class="sr-only">Toggle menu contents</span>
+        </button>
+    </template>
+</div>
+                    <div class="d-lg-none border-bottom">
+                        
+                    </div>
+                </div>
+            </aside>
+            <div class="col-12 col-lg-9 pt-5">
+                <header class="row align-items-baseline">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-0 p-0 bg-transparent">
+        <li class="breadcrumb-item"><a href="../../../index.html">Docs</a></li>
+            <li class="breadcrumb-item"><a href="../../2-index.html">语音识别</a></li>
+            <li class="breadcrumb-item"><a href="../2-index.html">Wenet</a></li>
+        <li class="breadcrumb-item active" aria-current="page">5-WeNet实验小结</li>
+    </ol>
+</nav>
+                    </div>
+                    <div class="col-sm-12 col-lg-auto mt-3 mt-lg-3">
+                        <noscript>
+                            <p>JavaScript is required to toggle light/dark mode..</p>
+                        </noscript>
+                        <button id="wagtail-theme" class="btn btn-sm btn-light text-decoration-none" type="button">
+                            <span class="dark-only"><i class="fas fa-sun"></i> Light mode</span>
+                            <span class="light-only"><i class="fas fa-moon"></i> Dark mode</span>
+                        </button>
+    <a class="btn btn-sm btn-light text-decoration-none" href="https://github.com/wagtail/sphinx_wagtail_theme/blob/main/docs/论文/02语音识别/02Wenet/5-WeNet实验小结.md" rel="nofollow">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
+    <a class="btn btn-sm btn-light text-decoration-none" href="../../../_sources/论文/02语音识别/02Wenet/5-WeNet实验小结.md.txt" rel="nofollow">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+                        
+                    </div>
+                </header>
+                <div class="row" >
+                    <div class="col-12">
+                        <hr class="w-100 my-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
+                        <main role="main" id="main">
+    <section class="tex2jax_ignore mathjax_ignore" id="wenet">
+<h1>5-WeNet实验小结<a class="headerlink" href="#wenet" title="此标题的永久链接">¶</a></h1>
+<section id="id1">
+<h2>1、开源模型<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h2>
+<p>下载地址：<a class="reference external" href="https://github.com/wenet-e2e/wenet/blob/main/docs/pretrained_models.en.md">https://github.com/wenet-e2e/wenet/blob/main/docs/pretrained_models.en.md</a></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Datasets</p></th>
+<th class="head"><p></p></th>
+<th class="head"><p>Checkpoint Model</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aishell2</p></td>
+<td><p></p></td>
+<td><p><a class="reference external" href="https://wenet-1256283475.cos.ap-shanghai.myqcloud.com/models/aishell2/20210618_u2pp_conformer_exp.tar.gz">Conformer</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>multi_cn</p></td>
+<td><p></p></td>
+<td><p><a class="reference external" href="https://wenet-1256283475.cos.ap-shanghai.myqcloud.com/models/multi_cn/20210815_unified_conformer_exp.tar.gz">Conformer</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="multi-cn">
+<h2>2、开源multi_CN数据集<a class="headerlink" href="#multi-cn" title="此标题的永久链接">¶</a></h2>
+<p>OpenSLR: <a class="reference external" href="http://www.openslr.org/resources.php">http://www.openslr.org/resources.php</a></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>数据集</p></th>
+<th class="head"><p>内容</p></th>
+<th class="head"><p>时长（小时）</p></th>
+<th class="head"><p>训练集大小</p></th>
+<th class="head"><p>录制人</p></th>
+<th class="head"><p>标注准确率</p></th>
+<th class="head"><p>数据下载</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aidatatang_200zh</p></td>
+<td><p>口语化句子</p></td>
+<td><p>200</p></td>
+<td><p>18G</p></td>
+<td><p>600</p></td>
+<td><p>&gt;98%</p></td>
+<td><p><a class="reference external" href="http://openslr.magicdatatech.com/62/">下载</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>aishell1</p></td>
+<td><p>智能家居、无人驾驶、工业生产等<strong>11</strong>个领域</p></td>
+<td><p>178</p></td>
+<td><p>17G</p></td>
+<td><p>400</p></td>
+<td><p>98%</p></td>
+<td><p><a class="reference external" href="http://openslr.magicdatatech.com/33/">下载</a></p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>互动问答，音乐搜索，SNS信息，家庭指挥和控制</p></td>
+<td><p>755</p></td>
+<td><p>78G</p></td>
+<td><p>1080</p></td>
+<td><p>&gt;98%</p></td>
+<td><p><a class="reference external" href="http://openslr.magicdatatech.com/68/">下载</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>primewords</p></td>
+<td><p></p></td>
+<td><p>100</p></td>
+<td><p>11G</p></td>
+<td><p>296</p></td>
+<td><p>&gt;98%</p></td>
+<td><p><a class="reference external" href="http://openslr.magicdatatech.com/47/">下载</a></p></td>
+</tr>
+<tr class="row-even"><td><p>stcmds</p></td>
+<td><p>网上语音聊天和智能语音控制</p></td>
+<td><p></p></td>
+<td><p>13G</p></td>
+<td><p>855</p></td>
+<td><p></p></td>
+<td><p><a class="reference external" href="http://openslr.magicdatatech.com/38/">下载</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>主要是新闻</p></td>
+<td><p></p></td>
+<td><p>2.8G</p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><a class="reference external" href="http://openslr.magicdatatech.com/18/">下载</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>总共包含1021000条音频数据，443065394个帧，词汇表有7028个单元</p>
+</section>
+<section id="id2">
+<h2>3、模型训练<a class="headerlink" href="#id2" title="此标题的永久链接">¶</a></h2>
+<p>​	训练完成的模型可以使用tensorboard查看，如果在容器内运行则需要添加端口映射</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorboard</span> <span class="o">--</span><span class="n">logdir</span><span class="o">=./</span><span class="n">tensorboard</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">0.0.0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">2001</span>
+</pre></div>
+</div>
+<p>可以获得训练时的训练损失、验证损失和lr。</p>
+<p>Multi_CN-Small 模型：</p>
+<p><img alt="" src="../../../_images/image-20230607095511524.png" /></p>
+<p><img alt="" src="../../../_images/image-20230607095522791.png" /></p>
+<p><img alt="" src="../../../_images/image-20230607095533549.png" /></p>
+<p>Multi_CN-Medium 模型：</p>
+<p><img alt="" src="../../../_images/image-20230524110059842.png" /></p>
+<p><img alt="" src="../../../_images/image-20230524110120503.png" /></p>
+<p><img alt="" src="../../../_images/image-20230524110139018.png" /></p>
+<p>Multi_CN 模型：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Conformer(S)</p></th>
+<th class="head"><p>Conformer(M)</p></th>
+<th class="head"><p>Conformer(L)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数数目</p></td>
+<td><p>18,110,490</p></td>
+<td><p>48,350,186</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>编码器层数</p></td>
+<td><p>9</p></td>
+<td><p>12</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-even"><td><p>编码器维度</p></td>
+<td><p>144</p></td>
+<td><p>256</p></td>
+<td><p>512</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意力头数目</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>卷积核大小</p></td>
+<td><p>15</p></td>
+<td><p>15</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td><p>解码器层数</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>epochs</p></td>
+<td><p>120</p></td>
+<td><p>180</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>模型大小</p></td>
+<td><p>70.874MB</p></td>
+<td><p>189.082MB</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>4、测试结果<a class="headerlink" href="#id3" title="此标题的永久链接">¶</a></h2>
+<section id="id4">
+<h3>4.1 测试数据集<a class="headerlink" href="#id4" title="此标题的永久链接">¶</a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>语音条数</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aishell</p></td>
+<td><p>7176</p></td>
+</tr>
+<tr class="row-odd"><td><p>aidatatang</p></td>
+<td><p>48144</p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>24279</p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>2495</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h3>4.1 官方提供的 Multi-CN 测试结果<a class="headerlink" href="#id5" title="此标题的永久链接">¶</a></h3>
+<p>官方下载的multi-cn预训练模型结果，模型结构为Unified Conformer，chunk size为16，模型大小为213.4MB</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>attention decoder</p></th>
+<th class="head"><p>ctc greedy search</p></th>
+<th class="head"><p>ctc prefix beam search</p></th>
+<th class="head"><p>attention rescoring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aishell</p></td>
+<td><p>1.32%</p></td>
+<td><p>2.73%</p></td>
+<td><p>2.73%</p></td>
+<td><p>1.71%</p></td>
+</tr>
+<tr class="row-odd"><td><p>aidatatang</p></td>
+<td><p>3.78%</p></td>
+<td><p>5.15%</p></td>
+<td><p>5.15%</p></td>
+<td><p>4.21%</p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>2.60%</p></td>
+<td><p>3.81%</p></td>
+<td><p>3.79%</p></td>
+<td><p>2.94%</p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>10.16%</p></td>
+<td><p>11.85%</p></td>
+<td><p>11.85%</p></td>
+<td><p>10.80%</p></td>
+</tr>
+</tbody>
+</table>
+<p>thchs是带噪的测试语音，所以效果较差，且转录文本字数较多，平均一段音频对应30段中文字，而且句子也特别复杂，下面是示例：</p>
+<p><img alt="" src="../../../_images/image-20230607104444793.png" /></p>
+<p>如果使用LM模型，使用WFST进行解码，下载官方runtime模型final.zip，测试在不同数据集下的WER:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>WFST</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aishell</p></td>
+<td><p>1.80%</p></td>
+</tr>
+<tr class="row-odd"><td><p>aidatatang</p></td>
+<td><p>3.34%</p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>2.04%</p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>11.99%</p></td>
+</tr>
+</tbody>
+</table>
+<p>词典里面没有英文，对英文的识别能力显著下降</p>
+</section>
+<section id="multi-cn-medium">
+<h3>4.2 Multi_CN-Medium 测试结果<a class="headerlink" href="#multi-cn-medium" title="此标题的永久链接">¶</a></h3>
+<p>自己的预训练模型结果，模型结构为UnifiedConformer, chunk size为16，找到最好的cv loss的模型，采用30次模型平均可以获得更好的效果，模型大小为189.057MB，选择的epoch为[177 171 165 172 164 175 170 176 155 173 157 178 179 147 166 152 149 144 169 174 141 138 163 162 167 150 154 148 146 168]，得到平均后的模型avg_30.pt，然后对其在测试集上进行测试：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>attention decoder</p></th>
+<th class="head"><p>ctc greedy search</p></th>
+<th class="head"><p>ctc prefix beam search</p></th>
+<th class="head"><p>attention rescoring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aishell</p></td>
+<td><p>4.37%</p></td>
+<td><p>5.49%</p></td>
+<td><p>5.50%</p></td>
+<td><p>4.57%</p></td>
+</tr>
+<tr class="row-odd"><td><p>aidatatang</p></td>
+<td><p>4.02%</p></td>
+<td><p>5.30%</p></td>
+<td><p>5.30%</p></td>
+<td><p>4.36%</p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>2.53%</p></td>
+<td><p>3.51%</p></td>
+<td><p>3.50%</p></td>
+<td><p>2.77%</p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>13.31%</p></td>
+<td><p>14.47%</p></td>
+<td><p>14.74%</p></td>
+<td><p>13.41%</p></td>
+</tr>
+</tbody>
+</table>
+<p>自己的预训练模型不如下载的可能原因分析：建模单元少了3000（自己的词汇表为7028，官方的为11008），主要体现在对英文模型的建模能力弱了很多。训练数据主要来源于 magicdata，因此在该数据集测试集下的效果较好。</p>
+</section>
+<section id="multi-cn-small">
+<h3>4.3 Multi_CN-Small 测试结果<a class="headerlink" href="#multi-cn-small" title="此标题的永久链接">¶</a></h3>
+<p>自己的预训练模型结果，模型结构为UnifiedConformer, chunk size为16，找到最好的cv loss的模型，采用20次模型平均可以获得更好的效果，模型大小为  70.874MB，选择的epoch为[119 115 111 117 113 114 118 106 116 108 112 104 105 102 110 109  99 101]，得到平均后的模型avg_20.pt，然后对其在测试集上进行测试：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>attention decoder</p></th>
+<th class="head"><p>ctc greedy search</p></th>
+<th class="head"><p>ctc prefix beam search</p></th>
+<th class="head"><p>attention rescoring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aishell</p></td>
+<td><p>5.36%</p></td>
+<td><p>6.67%</p></td>
+<td><p>6.67%</p></td>
+<td><p>5.59%</p></td>
+</tr>
+<tr class="row-odd"><td><p>aidatatang</p></td>
+<td><p>5.27%</p></td>
+<td><p>6.57%</p></td>
+<td><p>6.56%</p></td>
+<td><p>5.62%</p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>3.49%</p></td>
+<td><p>4.53%</p></td>
+<td><p>4.50%</p></td>
+<td><p>3.71%</p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>13.82%</p></td>
+<td><p>16.08%</p></td>
+<td><p>16.08%</p></td>
+<td><p>14.76%</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id6">
+<h3>4.4 额外实验<a class="headerlink" href="#id6" title="此标题的永久链接">¶</a></h3>
+<ul class="simple">
+<li><p>模型平滑对性能的影响，解码方式选择attention_rescoring</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>数据集</p></th>
+<th class="head"><p>with Average（30）</p></th>
+<th class="head"><p>last epoch</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AISHELL</p></td>
+<td><p>4.57%</p></td>
+<td><p>4.88%</p></td>
+</tr>
+<tr class="row-odd"><td><p>THCHS</p></td>
+<td><p>13.41%</p></td>
+<td><p>14.22%</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>量化模型对性能的影响（Runtime模式）JIT模型·：</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>数据集</p></th>
+<th class="head"><p>quantization(int 8)</p></th>
+<th class="head"><p>FP32</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AISHELL</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>THCHS</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>不同模型在 attention_rescoring 解码方式下的性能对比：</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>模型</p></th>
+<th class="head"><p>AISHELL</p></th>
+<th class="head"><p>Multi_CN small</p></th>
+<th class="head"><p>Multi_CN medium</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aishell</p></td>
+<td><p>4.62%</p></td>
+<td><p>5.59%</p></td>
+<td><p>4.57%</p></td>
+</tr>
+<tr class="row-odd"><td><p>aidatatang</p></td>
+<td><p>23.69%</p></td>
+<td><p>5.62%</p></td>
+<td><p>4.36%</p></td>
+</tr>
+<tr class="row-even"><td><p>magicdata</p></td>
+<td><p>24.88%</p></td>
+<td><p>3.71%</p></td>
+<td><p>2.77%</p></td>
+</tr>
+<tr class="row-odd"><td><p>thchs</p></td>
+<td><p>20.13%</p></td>
+<td><p>14.76%</p></td>
+<td><p>13.41%</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>不同模型 with-LM 的性能</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>数据集</p></th>
+<th class="head"><p>AISHELL</p></th>
+<th class="head"><p>Multi_CN small</p></th>
+<th class="head"><p>Multi_CN medium</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AISHELL</p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>THCHS</p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id7">
+<h2>5、心得记录<a class="headerlink" href="#id7" title="此标题的永久链接">¶</a></h2>
+<p><strong>动态bath size和静态batch size</strong></p>
+<p>​	参考：<a class="reference external" href="https://blog.csdn.net/shaoyou223/article/details/122642487">动态batch和静态batch的原理和代码详解_少游223的博客-CSDN博客</a></p>
+<p>​	wenet支持两种batch训练方式</p>
+<ul class="simple">
+<li><p>第一种是常规的静态batch方案，但当语音长短差异过大时，显存利用率低，同时带来显存oom风险</p></li>
+<li><p>第二种是动态batch方案，不指定batch_size的大小，只限制batch中的最大总帧数，这样就能充分利用显存，同时不会有oom的风险</p></li>
+</ul>
+<p>静态batch代码实现：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">static_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">batch_size</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">buf</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">buf</span>
+</pre></div>
+</div>
+<p>动态batch代码实现：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dynamic_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">max_frames_in_batch</span><span class="o">=</span><span class="mi">12000</span><span class="p">):</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">longest_frames</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s1">&#39;feat&#39;</span> <span class="ow">in</span> <span class="n">sample</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;feat&#39;</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+        <span class="n">new_sample_frames</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;feat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">longest_frames</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">longest_frames</span><span class="p">,</span> <span class="n">new_sample_frames</span><span class="p">)</span>
+        <span class="n">frames_after_padding</span> <span class="o">=</span> <span class="n">longest_frames</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">frames_after_padding</span> <span class="o">&gt;</span> <span class="n">max_frames_in_batch</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">buf</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="p">[</span><span class="n">sample</span><span class="p">]</span>
+            <span class="n">longest_frames</span> <span class="o">=</span> <span class="n">new_sample_frames</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">buf</span>
+</pre></div>
+</div>
+<p><strong>解决爆显存的方法</strong></p>
+<p>1、若采用static_batch训练，减少batch size，对于24G的RTX 4090，需要减少batch size为4；若采用dynamic_batch训练，为了平衡训练速度和显存，设置max_frame_in_batch为24000，这两种方法可以有效解决OOM的问题，但是训练速度会有明显下降</p>
+<p>2、减小filter_conf设置项的max_length，减少为20480，对OOM有一定的缓解，但缓解作用不大</p>
+<p>3、网上说tensorboard会影响速度，但感觉没啥影响</p>
+<p><strong>训练过程中GPU利用率忽高忽低，有时为0</strong></p>
+<p>​	把数据集从机械硬盘放到固态硬盘可以有效解决</p>
+<p><strong>Python永久设置路径</strong></p>
+<ul class="simple">
+<li><p>当需要import文件夹中的.py文件时，会出现<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'wenet'</span></code>的报错信息，需要自主添加path：</p></li>
+<li><p>临时添加：sys.path.append()，需要修改代码，且为临时修改，程序退出后需要清空环境变量</p></li>
+<li><p>在site-packet下建立一个wenet_path.pth文件，并添加需要自定义包含引入的路径</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">wenet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">wenet_path</span><span class="o">.</span><span class="n">pth</span>
+</pre></div>
+</div>
+<p>添加以下内容：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">lzl</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">wenet</span><span class="o">/</span><span class="n">wenet</span><span class="o">-</span><span class="n">main</span>
+</pre></div>
+</div>
+<p>核对路径是否添加</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="go">[&#39;&#39;, &#39;/home/lzl/anaconda3/envs/wenet/lib/python38.zip&#39;, &#39;/home/lzl/anaconda3/envs/wenet/lib/python3.8&#39;, &#39;/home/lzl/anaconda3/envs/wenet/lib/python3.8/lib-dynload&#39;, &#39;/home/lzl/anaconda3/envs/wenet/lib/python3.8/site-packages&#39;, &#39;/home/lzl/python/wenet/wenet-main&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">wenet.dataset.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+</pre></div>
+</div>
+<p>没有出现报错信息说明路径已成功添加</p>
+<p><strong>Ubuntu下载多版本的CUDA</strong></p>
+<ul>
+<li><p>下载CUDA Toolkit</p>
+<p>首先去官网https://developer.nvidia.com/cuda-toolkit-archive下载对应版本的 CUDA Toolkit，采用runfile(local)方式</p>
+<p><img alt="" src="../../../_images/image-20230514112053765.png" /></p>
+<p>可以得到<code class="docutils literal notranslate"><span class="pre">cuda**.run</span></code>文件</p>
+</li>
+<li><p>安装CUDA</p>
+<p>使用命令安装</p>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">sh</span> <span class="n">cuda</span><span class="o">**.</span><span class="n">run</span>
+</pre></div>
+</div>
+<p>在安装选项中仅安装CUDA Toolkit，其它如驱动、示例等不安装</p>
+<ul>
+<li><p>安装cudnn</p>
+<p>进入cudnn官网https://developer.nvidia.com/rdp/cudnn-archive，下载tar包，采用<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-xf</span> <span class="pre">cudnn**.tgz</span></code>解压，解压后</p>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">cp</span> <span class="n">cudnn</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="mf">8.8.1.3</span><span class="n">_cuda11</span><span class="o">-</span><span class="n">archive</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">cudnn</span><span class="o">.</span><span class="n">h</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">-</span><span class="mf">11.6</span><span class="o">/</span><span class="n">include</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">cp</span> <span class="n">cudnn</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="mf">8.8.1.3</span><span class="n">_cuda11</span><span class="o">-</span><span class="n">archive</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libcudnn</span><span class="o">*</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">-</span><span class="mf">11.6</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">r</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">-</span><span class="mf">11.6</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">cudnn</span><span class="o">.</span><span class="n">h</span>
+<span class="n">sudo</span> <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">r</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">-</span><span class="mf">11.6</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libcudnn</span><span class="o">*</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>新建环境变量并建立软链接</p>
+<ul>
+<li><p>新建环境变量：</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 打开环境变量目录
+vim ~/.bashrc
+
+# 添加
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+</pre></div>
+</div>
+<p>环境变量建好后就不用更改了。</p>
+<ul class="simple">
+<li><p>建立软链接用于CUDA版本自动切换</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 删除之前的软链接</span>
+<span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span>
+<span class="c1"># 创建新的cuda软链接</span>
+<span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">-</span><span class="mf">11.6</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+</main>
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>4-Wenet模型结构
+    </a>
+    <a class="float-right" href="6-WeNet%E9%83%A8%E7%BD%B2.html" title="Next">
+        6-WeNet部署 <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
+                    </div>
+                    
+                    <nav class="col-12 col-lg-3 pb-4">
+                        <div class="sticky-top toc page-toc" aria-labelledby="page-toc-heading">
+                            <p class="font-weight-bold" id="page-toc-heading">Page contents</p>
+                            <ul>
+<li><a class="reference internal" href="#">5-WeNet实验小结</a><ul>
+<li><a class="reference internal" href="#id1">1、开源模型</a></li>
+<li><a class="reference internal" href="#multi-cn">2、开源multi_CN数据集</a></li>
+<li><a class="reference internal" href="#id2">3、模型训练</a></li>
+<li><a class="reference internal" href="#id3">4、测试结果</a><ul>
+<li><a class="reference internal" href="#id4">4.1 测试数据集</a></li>
+<li><a class="reference internal" href="#id5">4.1 官方提供的 Multi-CN 测试结果</a></li>
+<li><a class="reference internal" href="#multi-cn-medium">4.2 Multi_CN-Medium 测试结果</a></li>
+<li><a class="reference internal" href="#multi-cn-small">4.3 Multi_CN-Small 测试结果</a></li>
+<li><a class="reference internal" href="#id6">4.4 额外实验</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">5、心得记录</a></li>
+</ul>
+</li>
+</ul>
+
+                        </div>
+                    </nav>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-primary text-light">
+        <div class="container">
+            <div class="row">
+        <div class="col p-4">
+            
+                <nav aria-label="Footer">
+                    <ul class="nav justify-content-center mb-2">
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/features/">Features</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/about-wagtail/"> About Wagtail</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/services/"> Services</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/blog/"> Blog</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/packages/"> Packages</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/developers/"> Developers</a></li>
+                        
+                    </ul>
+                </nav>
+            
+            <div class="text-center">
+                <p style="display: none">
+                    <a class="text-light" href="https://github.com/wagtail/sphinx_wagtail_theme" rel="nofollow" target="_blank">
+                        Wagtail Sphinx Theme 6.0.0
+                    </a>
+                </p>
+            </div>
+            <div class="text-center">
+                    &copy; Copyright 2023, 李仲亮
+            </div>
+        </div>
+    </div>
+        </div>
+    </footer>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/theme.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/vendor.js"></script>
+        <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() { Search.loadIndex("../../../searchindex.js"); });
+        </script>
+        <script type="text/javascript" id="searchindexloader"></script>
+    </body>
+</html>

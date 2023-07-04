@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+        <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>联邦学习开源项目 &mdash; SphinxDiary v1.0 文档</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/dist/fontawesome.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/dist/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+            <link rel="index" title="索引" href="../../../genindex.html" />
+            <link rel="search" title="搜索" href="../../../search.html" />
+            <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="up" title="联邦学习项目" href="../1-index.html" />
+            <link rel="next" title="语言模型" href="../../4-index.html" />
+            <link rel="prev" title="联邦学习项目" href="../1-index.html" />
+    </head>
+<body>
+    <script type="text/javascript" src="../../../_static/dist/blocking.js"></script>
+    <header class="container-fluid bg-primary">
+        <a class="btn btn-sm btn-light skip-to-content-link" href="#main">Skip to content</a>
+        <div class="container-fluid">
+            <div class="navbar navbar-expand-lg navbar-dark font-weight-bold">
+                    <a href="../../../index.html"
+                        title="Wagtail"
+                        class="logo navbar-brand"
+                    >
+                        <img src="../../../_static/img/wagtail-logo-new.svg" width="45" height="59" alt="Wagtail"
+                            class="logo-img"
+                        />
+                        Sphinx Wagtail Theme
+                    </a>
+                
+                
+                <button class="navbar-toggler btn btn-primary d-lg-none" type="button" data-toggle="collapse" data-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="sr-only">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-12 col-lg-3 sidebar-container">
+                <div id="collapseSidebar" class="collapse sticky-top d-lg-block pt-5 pr-lg-4">
+<div id="searchbox" class="searchbox mb-6 px-1" role="search">
+    <form id="search-form" action="../../../search.html" autocomplete="off" method="get" role="search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text border-right-0 bg-white py-3 pl-3 pr-2"><span class="fas fa-search"></span></div>
+            </div>
+            <input class="form-control py-3 pr-3 pl-1 h-100 border-left-0" type="search" name="q" placeholder="Search documentation" aria-label="Search documentation" id="searchinput" />
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div><div class="site-toc">
+    <nav class="toc mt-3" aria-label="Main menu">
+        <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/1-index.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/01Docker/03Docker%E5%AE%B9%E5%99%A8%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB.html">Docker容器备份与迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/2-index.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/01%E5%9C%A8Ubuntu18.04%E4%B8%8A%E6%90%AD%E5%BB%BAkubernetes.html">kubernetes安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/02%E4%BD%BF%E7%94%A8MIG%E5%92%8CKubernetes%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2NVIDIA%20Triton.html">Kubernetes部署NVIDIA Triton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/03%E4%BD%BF%E7%94%A8Kubernetes%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4.html">Kubernetes创建集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/04Triton%20Metrics.html">Triton Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/02Triton_with_kubernetes/05Grafana.html">Grafana</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/3-index.html">Triton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/01Triton_Inference_Server%E5%85%A5%E9%97%A8.html">Triton Inference Server入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/02Triton%E5%85%A5%E9%97%A8%E7%BA%A7%E6%95%99%E7%A8%8B.html">Triton入门级教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/03Triton/03Triton_Backend%E8%AF%A6%E8%A7%A3.html">Triton_Backend详解</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/4-index.html">Pytorch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/04Pytorch/01%E6%95%B0%E6%8D%AE%E9%9B%86.html">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/5-index.html">语音识别环境部署教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/01jetpack5.0.2%E5%AE%89%E8%A3%85.html">Jetpack 5.0.2安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/02%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html">深度学习环境配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/03%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2.html">语音识别模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/04%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86.html">客户端模型推理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/05%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/05%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.html">性能测试</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/6-index.html">小工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/01Git.html">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/2-index.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/01GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（一）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/02GitHub%20%2B%20Spinx%20%2B%20Read%20the%20docs%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89.html">GitHub + Spinx + Read the docs实战入门指南（二）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/03Markdown.html">Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/02Sphinx/04MyST-Parser.html">MyST-Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/03Fastertransformer.html">Fastertransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/04FileBrowser.html">FileBrowser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/05NFS%E9%85%8D%E7%BD%AE.html">NFS配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/06%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">服务器文件管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/06%E5%B0%8F%E5%B7%A5%E5%85%B7/07StableDiffusion.html">Stable Diffusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/7-index.html">NNI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/01-NNI%E7%A4%BA%E4%BE%8B.html">NNI 示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/07NNI/02-NNI%E9%83%A8%E7%BD%B2.html">NNI 部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/8-index.html">Android</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../%E7%AC%94%E8%AE%B0/08Android/01Android%20APK.html">Android APK</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">论文:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../1-index.html">Fine tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/01Prompt%20Tuning.html">Prompt Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/02Prompt%20Tuning%20v2.html">Prompt Tuning V2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/03Lora.html">LoRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01Fine_tuning/04ChatGLM%E5%BE%AE%E8%B0%83%E5%AE%9E%E9%AA%8C.html">ChatGLM微调实验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../2-index.html">语音识别</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/1-index.html">语音识别综述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/1-Recent%20Advance%20in%20End-to-End%20Automatic%20Speech%20Recognition.html">1-Recent Advance in End-to-End Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/01%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%BB%BC%E8%BF%B0/2-A%20Comparative%20Study%20On%20Transformer%20VS%20RNN%20In%20Speech%20Applications.html">2-A Comparative Study On Transformer VS RNN In Speech Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/2-index.html">Wenet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/1-WeNet%20Production%20Oriented%20Streaming%20and%20Non-Streaming%20End-to-End%20Speech%20Recognition%20Toolkit.html">1-WeNet Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/2-WeNet2.0%20More%20Productive%20End-to-End%20Speech%20Recognition%20Toolkit.html">2-Wenet2.0 More Productive End-to-End Speech Recognition Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/3-WeNet-LM%E6%A8%A1%E5%9E%8B.html">3-WeNet-LM模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/4-WeNet%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.html">4-Wenet模型结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/5-WeNet%E5%AE%9E%E9%AA%8C%E5%B0%8F%E7%BB%93.html">5-WeNet实验小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/02Wenet/6-WeNet%E9%83%A8%E7%BD%B2.html">6-WeNet部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/3-index.html">模型微调</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/03%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/1-FINE-TUNING%20OF%20PRE-TRAINED%20END-TO-END%20SPEECH%20RECOGNITION%20WITH%20GENERATIVE%20ADVERSARIAL%20NETWORKS.html">1-Fine-Tuning Of Pre-trained end-to-end Speech Recognition With Generative Adversarial Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/4-index.html">编码器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/1-Conformer-Convolution-augmented%20Transformer%20for%20Speech%20Recognition.html">1-Conformer-Convolution-augmented Transformer for Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/2-Paraformer-Fast%20and%20Accurate%20Parallel%20Transformer%20for%20Non-autoregressive.html">2-Paraformer-Fast and Accurate Parallel Transformer for Non-autoregressive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/3-LFEformer-Local_Feature_Enhancement_Using_Sliding_Window_With_Deformability_for_Automatic_Speech_Recognition.html">3-LFEformer-Local Feature Enhancement Using Sliding Window With Deformability for Automatic Speech Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../02%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/04%E7%BC%96%E7%A0%81%E5%99%A8/4-Squeezeformer-An%20Efficient%20Transformer%20for%20Automatic%20Speech%20Recognition.html">4-Squeezeformer-An Efficient Transformer for Automatic Speech Recognition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../3-index.html">联邦学习</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../1-index.html">联邦学习项目</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">联邦学习开源项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../4-index.html">语言模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/1-Transformer-XL-Attention%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.html">1-Transformer-XL-Attention Language Models Beyond a Fixed-Length Context</a></li>
+</ul>
+</li>
+</ul>
+
+    </nav>
+    <template data-toggle-item-template>
+        <button class="btn btn-sm btn-link toctree-expand" type="button">
+            <span class="sr-only">Toggle menu contents</span>
+        </button>
+    </template>
+</div>
+                    <div class="d-lg-none border-bottom">
+                        
+                    </div>
+                </div>
+            </aside>
+            <div class="col-12 col-lg-9 pt-5">
+                <header class="row align-items-baseline">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-0 p-0 bg-transparent">
+        <li class="breadcrumb-item"><a href="../../../index.html">Docs</a></li>
+            <li class="breadcrumb-item"><a href="../../3-index.html">联邦学习</a></li>
+            <li class="breadcrumb-item"><a href="../1-index.html">联邦学习项目</a></li>
+        <li class="breadcrumb-item active" aria-current="page">联邦学习开源项目</li>
+    </ol>
+</nav>
+                    </div>
+                    <div class="col-sm-12 col-lg-auto mt-3 mt-lg-3">
+                        <noscript>
+                            <p>JavaScript is required to toggle light/dark mode..</p>
+                        </noscript>
+                        <button id="wagtail-theme" class="btn btn-sm btn-light text-decoration-none" type="button">
+                            <span class="dark-only"><i class="fas fa-sun"></i> Light mode</span>
+                            <span class="light-only"><i class="fas fa-moon"></i> Dark mode</span>
+                        </button>
+    <a class="btn btn-sm btn-light text-decoration-none" href="https://github.com/wagtail/sphinx_wagtail_theme/blob/main/docs/论文/03联邦学习/01联邦学习项目/1-联邦学习开源项目.md" rel="nofollow">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
+    <a class="btn btn-sm btn-light text-decoration-none" href="../../../_sources/论文/03联邦学习/01联邦学习项目/1-联邦学习开源项目.md.txt" rel="nofollow">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+                        
+                    </div>
+                </header>
+                <div class="row" >
+                    <div class="col-12">
+                        <hr class="w-100 my-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
+                        <main role="main" id="main">
+    <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>联邦学习开源项目<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>框架</p></th>
+<th class="head"><p>介绍</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TensorFlow Federated</p></td>
+<td><p>由Google开发的联邦学习框架，使用TensorFlow作为后端，支持Python API和TensorFlow.js。</p></td>
+</tr>
+<tr class="row-odd"><td><p>PySyft</p></td>
+<td><p>由OpenMined社区开发的Python库，提供了一个可扩展的框架，支持多种类型的神经网络，包括PyTorch和TensorFlow。</p></td>
+</tr>
+<tr class="row-even"><td><p>Flower</p></td>
+<td><p>一个用于构建联邦学习系统的Python框架，它使用PyTorch和TensorFlow作为后端，支持异构设备和安全多方计算。</p></td>
+</tr>
+<tr class="row-odd"><td><p>IBM Federated Learning</p></td>
+<td><p>IBM开发的联邦学习框架，使用Python和TensorFlow，支持不同类型的神经网络和分布式数据训练。</p></td>
+</tr>
+<tr class="row-even"><td><p>FATE</p></td>
+<td><p>由WeBank开发的联邦学习平台，支持Python和Java，提供了许多联邦学习算法和组件，包括数据预处理、模型训练和模型评估。</p></td>
+</tr>
+<tr class="row-odd"><td><p>XayNet</p></td>
+<td><p>一个用于构建联邦学习系统的Rust库，它支持异构设备和多方计算，并提供了一些安全的通信协议。</p></td>
+</tr>
+</tbody>
+</table>
+<section id="pysyft">
+<h2>1、Pysyft<a class="headerlink" href="#pysyft" title="此标题的永久链接">¶</a></h2>
+<p>​	对于机器学习模型，多方安全计算（SMPC）将保护模型权重，同时允许多个工作节点使用自己的数据集参加训练阶段，这一过程称为联邦学习。Pysyft 是一个库，其中包含保护隐私的机器学习工具，Hagrid是一个命令行工具，可以加快 PyGrid 的部署，PyGrid 是一个由数据所有者和数据科学家组成的对等网络提供商，可以使用 Syft 联合训练人工智能模型。</p>
+<p>​	相关术语：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>名词</p></th>
+<th class="head"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>pysyft</p></td>
+<td><p>一个开源平台，结合联邦学习和差分隐私技术，实现远程数据科学实验</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>PyGrid</p></td>
+<td><p>PyGrid是数据所有者和数据科学家组成的peer-to-peer网络，可以使用Pysyft联合训练AI模型，PyGrid也是进行以模型为中心和以数据为中心的联邦学习的中心服务器，可以通过用户界面PyGrid Admin来控制PyGrid</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>HaGrid</p></td>
+<td><p>HaGrid是一个命令行工具，可以加快PyGrid的部署，该软件提供了一个由数据所有者和数据科学家组成的peer-to-peer网络，他们可以共同训练模型</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Remote Data Science</p></td>
+<td><p>数据科学的一个子领域，其中数据科学家能够从数据所有者拥有的数据集中提取见解(insights)，但只能提取数据所有者明确规定的见解，这些见解的偏好由加密，信息安全和分布式系统等技术强制执行</p></td>
+</tr>
+</tbody>
+</table>
+<p>两种训练方式</p>
+<ul class="simple">
+<li><p>非并行训练：</p></li>
+</ul>
+<p><img alt="" src="../../../_images/image-20230523103758152.png" /></p>
+<ul class="simple">
+<li><p>并行训练：</p></li>
+</ul>
+<p><img alt="" src="../../../_images/image-20230523103931747.png" /></p>
+<p>关键实现代码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义虚拟用户</span>
+<span class="n">hook</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">TorchHook</span><span class="p">(</span><span class="n">torch</span><span class="p">)</span>
+<span class="n">bob</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">VirtualWorker</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;bob&quot;</span><span class="p">)</span>
+<span class="n">alice</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">VirtualWorker</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;alice&quot;</span><span class="p">)</span>
+<span class="c1"># 数据通信</span>
+<span class="n">data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">bob</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+<span class="n">modelget</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>测试结果</p>
+<ul class="simple">
+<li><p>设备GTX1080Ti，MNIST手写数字识别任务，5次迭代训练，训练时间和识别准确率</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Syft</p></th>
+<th class="head"><p>with CUDA</p></th>
+<th class="head"><p>No CUDA</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>中心化</p></td>
+<td><p>6.88862s  (98%)</p></td>
+<td><p>184.83739s  (98%)</p></td>
+</tr>
+<tr class="row-odd"><td><p>非并行训练</p></td>
+<td><p>307.39693s  (98%)</p></td>
+<td><p>423.53645s  (98%)</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>并行训练，采用联邦平均算法：</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Syft</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Bob</p></td>
+<td><p>95.5%</p></td>
+<td><p>97.1%</p></td>
+<td><p>98.1%</p></td>
+<td><p>98.2%</p></td>
+<td><p>98.5%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Alice</p></td>
+<td><p>95.5%</p></td>
+<td><p>97.0%</p></td>
+<td><p>97.9%</p></td>
+<td><p>97.0%</p></td>
+<td><p>96.9%</p></td>
+</tr>
+<tr class="row-even"><td><p>Model</p></td>
+<td><p>73.6%</p></td>
+<td><p>87.2%</p></td>
+<td><p>71.8%</p></td>
+<td><p>86.0%</p></td>
+<td><p>64.5%</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="flower">
+<h2>2、Flower<a class="headerlink" href="#flower" title="此标题的永久链接">¶</a></h2>
+<p>​	Flower服务器通过名为Client的接口接入到客户端，当服务器选择客户端进行训练时，通过网络发送训练指令，客户端接收指令，调用<code class="docutils literal notranslate"><span class="pre">Client</span></code>方法运行代码（即训练我们定义的神经网络）</p>
+<p><img alt="" src="../../../_images/image-20230523104338667.png" /></p>
+<p>Flower提供便捷的类<code class="docutils literal notranslate"><span class="pre">NumpyClient</span></code>，可以更方便实现Client接口，通常会使用以下方法：</p>
+<ol class="arabic simple">
+<li><p>get_parameters：返回NumPy ndarrays模型权重，返回当前客户端的模型参数</p></li>
+<li><p>set_parameters：根据从服务器接收的参数更新本地模型权重</p></li>
+<li><p>fit：从服务端接收模型参数，在本地数据集上训练模型，并将模型参数返回给服务端</p></li>
+<li><p>evaluate：从服务端接收模型参数，在本地数据集上评估模型，并将评估结果返回给服务端</p></li>
+</ol>
+<p>Flower框架支持的联邦学习策略</p>
+<ul class="simple">
+<li><p>FedAvg：<img alt="" src="../../../_images/image-20230523102717897.png" />，<img alt="" src="../../../_images/image-20230523102730854.png" /></p></li>
+<li><p>QFedAvg：资源分配公平性，损失大的参与者权重更高<img alt="" src="../../../_images/image-20230523102749630.png" /></p></li>
+<li><p>FedAvgM：提出基于“动量”的解决方案，有效缓解Non-IID带来的性能下降<img alt="" src="../../../_images/image-20230523102817856.png" /><img alt="" src="../../../_images/image-20230523102823272.png" /></p></li>
+<li><p>FedProx：整合所有参与训练的局部模型，局部模型的目标函数为损失函数加上proximal terms<img alt="" src="../../../_images/image-20230523102902864.png" /></p></li>
+<li><p>FedAdagrad：<img alt="" src="../../../_images/image-20230523102938121.png" /></p></li>
+<li><p>FedYogi：<img alt="" src="../../../_images/image-20230523102944746.png" /></p></li>
+<li><p>FedAdam：<img alt="" src="../../../_images/image-20230523102950146.png" /></p></li>
+</ul>
+<p>测试结果</p>
+<ul class="simple">
+<li><p>设备RTX3090Ti，MNIST手写数字识别任务，5次迭代训练，5轮联邦通信</p></li>
+<li><p>自适应算法的初始学习率为0.01，beta_1=0.9，beta_2=0.99</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Flower/rounds</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FedAvg</p></td>
+<td><p>0.9835</p></td>
+<td><p>0.9892</p></td>
+<td><p>0.989</p></td>
+<td><p>0.9913</p></td>
+<td><p>0.9883</p></td>
+</tr>
+<tr class="row-odd"><td><p>FedAvgM</p></td>
+<td><p>0.9838</p></td>
+<td><p>0.9894</p></td>
+<td><p>0.9892</p></td>
+<td><p>0.9908</p></td>
+<td><p>0.9919</p></td>
+</tr>
+<tr class="row-even"><td><p>FaultTolerantFedAvg</p></td>
+<td><p>0.9836</p></td>
+<td><p>0.9895</p></td>
+<td><p>0.9908</p></td>
+<td><p>0.9917</p></td>
+<td><p>0.9916</p></td>
+</tr>
+<tr class="row-odd"><td><p>FedOpt</p></td>
+<td><p>0.9835</p></td>
+<td><p>0.9891</p></td>
+<td><p>0.9907</p></td>
+<td><p>0.9911</p></td>
+<td><p>0.9918</p></td>
+</tr>
+<tr class="row-even"><td><p>FedYogi</p></td>
+<td><p>0.8913</p></td>
+<td><p>0.9681</p></td>
+<td><p>0.9787</p></td>
+<td><p>0.9866</p></td>
+<td><p>0.9909</p></td>
+</tr>
+<tr class="row-odd"><td><p>FedAdm</p></td>
+<td><p>0.7905</p></td>
+<td><p>0.9786</p></td>
+<td><p>0.9886</p></td>
+<td><p>0.9888</p></td>
+<td><p>0.9886</p></td>
+</tr>
+<tr class="row-even"><td><p>FedAdagrad</p></td>
+<td><p>0.8119</p></td>
+<td><p>0.948</p></td>
+<td><p>0.9291</p></td>
+<td><p>0.9814</p></td>
+<td><p>0.9749</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+</main>
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="../1-index.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>联邦学习项目
+    </a>
+    <a class="float-right" href="../../4-index.html" title="Next">
+        语言模型 <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
+                    </div>
+                    
+                    <nav class="col-12 col-lg-3 pb-4">
+                        <div class="sticky-top toc page-toc" aria-labelledby="page-toc-heading">
+                            <p class="font-weight-bold" id="page-toc-heading">Page contents</p>
+                            <ul>
+<li><a class="reference internal" href="#">联邦学习开源项目</a><ul>
+<li><a class="reference internal" href="#pysyft">1、Pysyft</a></li>
+<li><a class="reference internal" href="#flower">2、Flower</a></li>
+</ul>
+</li>
+</ul>
+
+                        </div>
+                    </nav>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container-fluid bg-primary text-light">
+        <div class="container">
+            <div class="row">
+        <div class="col p-4">
+            
+                <nav aria-label="Footer">
+                    <ul class="nav justify-content-center mb-2">
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/features/">Features</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/about-wagtail/"> About Wagtail</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/services/"> Services</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/blog/"> Blog</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/packages/"> Packages</a></li>
+                        
+                            
+                            
+                            <li class="nav-item"><a class="nav-link text-light"  href="https://wagtail.org/developers/"> Developers</a></li>
+                        
+                    </ul>
+                </nav>
+            
+            <div class="text-center">
+                <p style="display: none">
+                    <a class="text-light" href="https://github.com/wagtail/sphinx_wagtail_theme" rel="nofollow" target="_blank">
+                        Wagtail Sphinx Theme 6.0.0
+                    </a>
+                </p>
+            </div>
+            <div class="text-center">
+                    &copy; Copyright 2023, 李仲亮
+            </div>
+        </div>
+    </div>
+        </div>
+    </footer>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/theme.js"></script>
+        <script type="text/javascript" src="../../../_static/dist/vendor.js"></script>
+        <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() { Search.loadIndex("../../../searchindex.js"); });
+        </script>
+        <script type="text/javascript" id="searchindexloader"></script>
+    </body>
+</html>
