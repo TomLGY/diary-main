@@ -19,6 +19,7 @@
    笔记/7-index
    笔记/8-index
    笔记/9-index
+   笔记/10-index
 
 .. toctree::
    :maxdepth: 2
