@@ -1,0 +1,199 @@
+# 1.选择人脸检测模型SCRFD
+
+```
+import numpy as np
+import onnxruntime
+import os.path as osp
+import cv2
+
+class SCRFD:
+    def __init__(self, model_file, providers=None, options=None, nms_thresh=0.4):
+        # assert osp.exists(model_file)
+
+        # if providers is None:
+        providers = ['CUDAExecutionProvider']
+        # if options is None:
+        options = onnxruntime.SessionOptions()
+
+        self.session = onnxruntime.InferenceSession(model_file, providers=providers, sess_options=options)
+        input_cfg = self.session.get_inputs()[0]
+        input_shape = input_cfg.shape
+        input_name = input_cfg.name
+        self.input_size = tuple(input_shape[2:4][::-1])
+        self.input_name = input_name
+        self.nms_thresh = nms_thresh
+        self.center_cache = {}
+
+    def forward(self, img, thresh):
+        scores_list = []
+        bboxes_list = []
+        kpss_list = []
+        input_size = tuple(img.shape[0:2][::-1])
+        blob = cv2.dnn.blobFromImage(img, 1.0 / 128, input_size, (127.5, 127.5, 127.5), swapRB=True)
+        blob = np.float16(blob)
+        net_outs = self.session.run([], {self.input_name: blob})
+
+        input_height = blob.shape[2]
+        input_width = blob.shape[3]
+        _feat_stride_fpn = [8, 16, 32]
+        for idx, stride in enumerate(_feat_stride_fpn):
+            scores = net_outs[idx][0]
+            bbox_preds = net_outs[idx + 3 * 1][0] * stride
+            kps_preds = net_outs[idx + 3 * 2][0] * stride
+
+            height = input_height // stride
+            width = input_width // stride
+            key = (height, width, stride)
+            if key in self.center_cache:
+                anchor_centers = self.center_cache[key]
+            else:
+                anchor_centers = np.stack(np.mgrid[:height, :width][::-1], axis=-1).astype(np.float32)
+                anchor_centers = (anchor_centers * stride).reshape((-1, 2))
+                anchor_centers = np.stack([anchor_centers] * 2, axis=1).reshape((-1, 2))
+                if len(self.center_cache) < 100:
+                    self.center_cache[key] = anchor_centers
+
+            pos_inds = np.where(scores >= thresh)[0]
+            if len(pos_inds) > 0:
+                bboxes = self.distance2bbox(anchor_centers, bbox_preds)
+                pos_scores = scores[pos_inds]
+                pos_bboxes = bboxes[pos_inds]
+                scores_list.append(pos_scores)
+                bboxes_list.append(pos_bboxes)
+                kpss = self.distance2kps(anchor_centers, kps_preds)
+                kpss = kpss.reshape((kpss.shape[0], -1, 2))
+                pos_kpss = kpss[pos_inds]
+                kpss_list.append(pos_kpss)
+        return scores_list, bboxes_list, kpss_list
+```
+
+# 2.选择人脸识别模型ArcFace
+
+```
+class ArcFace:
+    def __init__(self, model_file, providers=None, options=None):
+        assert model_file is not None
+
+        self.input_mean = 127.5
+        self.input_std = 127.5
+
+        if providers is None:
+            providers = ['CUDAExecutionProvider']
+        if options is None:
+            options = onnxruntime.SessionOptions()
+
+        self.session = onnxruntime.InferenceSession(model_file, providers=providers, options=options)
+        input_cfg = self.session.get_inputs()[0]
+        input_shape = input_cfg.shape
+        input_name = input_cfg.name
+        self.input_size = tuple(input_shape[2:4][::-1])
+        self.input_name = input_name
+
+    def get_feature(self, img, landmark):
+        _img = alignface.align(img, landmark)
+        # cv2.imwrite(os.path.join("./align",user_id,".jpg"),_img)
+        embedding = self.forward(_img).flatten()
+        embedding = np.array(embedding).reshape((1, -1))
+        embedding = preprocessing.normalize(embedding)
+        return embedding
+
+    def forward(self, imgs):
+        if not isinstance(imgs, list):
+            imgs = [imgs]
+        input_size = self.input_size
+
+        blob = cv2.dnn.blobFromImages(imgs, 1.0 / self.input_std, input_size,
+                                      (self.input_mean, self.input_mean, self.input_mean), swapRB=True)
+        blob = np.float16(blob)
+        net_out = self.session.run([], {self.input_name: blob})[0]
+        return net_out
+```
+
+# 3.通过USB口连接摄像头模块
+
+UVC，全称USB Video Class，是一种设备类定义，它描述了USB接口上的视频流设备的通用行为。这意味着，如果你的摄像头或其他视频设备符合UVC规范，那么它可以在任何操作系统上使用，只要该操作系统支持UVC。这种设备类定义使得设备制造商无需为每个操作系统编写特定的驱动程序，大大简化了设备的兼容性和使用性。
+
+Linux操作系统支持UVC设备。Linux内核中的UVC驱动程序（uvcvideo）允许UVC兼容的设备在Linux上工作。这意味着，如果你的摄像头是UVC兼容的，那么它应该能够在大多数现代Linux发行版上工作，无需安装额外的驱动程序。
+
+要在Linux上检查你的设备是否被识别为UVC设备，可以使用`lsusb`命令。这将列出所有连接到你的系统的USB设备。
+
+![image-20230712153802941](../../figs.assets/image-20230712153802941.png)
+
+4.定义摄像头人脸识别函数
+
+```
+def test_cam():
+
+        dete_model = "/home/lzl/lgy/arcface/scrfd_10g_bnkps_shape640x640_fp16.onnx"
+        reco_model = "/home/lzl/lgy/arcface/w600k_r50_fp16.onnx"
+        face_db_path="/home/lzl/lgy/arcface/"
+        #test_path = "./unknown"
+
+        face_reco = FaceRecognition(dete_model=dete_model, reco_model=reco_model, ctx_id=0)
+        face_reco.load_faces(face_db_path)
+        detector = SCRFD(model_file=dete_model)
+        # face_reco.load_faces_dir(face_db_path=face_db_path)
+
+        # img = cv2.imread("./unknown/Aaron_Peirsol/Aaron_Peirsol_0001.jpg")
+
+        #all_test_content = os.listdir(test_path)
+
+
+        # 创建VideoCapture对象，参数为0表示使用本地摄像头
+        cap = cv2.VideoCapture(0)
+
+        while True:
+            # 从摄像头中读取一帧图像
+            ret, frame = cap.read()
+            cv2.imshow('Local Camera', frame)
+            # frame = cv2.resize(frame, (250, 250))
+           
+            ta = time.time()
+            results = face_reco.recognize(frame)
+
+            time_cost = time.time() - ta
+            total_time = total_time + time_cost
+            total_num = total_num + 1
+
+            fps = "FPS:" + str(1/time_cost)
+            cv2.putText(frame, fps, (0, 22), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 0))
+            
+
+            if not results : 
+                dets, landmarks = detector.detect(frame, threshold=0.50)
+                result = list()
+                for det, landmark in zip(dets, landmarks):
+                    b = (np.array(det)[:4]).astype(np.int32).tolist()
+                    # b = result["bbox"]
+                    cv2.rectangle(frame, (b[0], b[1]), (b[2], b[3]), (0, 0, 255), 2)
+                    cx = b[0]
+                    cy = b[1] + 12
+                    text = "Unknown" 
+                    cv2.putText(frame, text, (cx, cy), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 0))
+                
+                print("Unknown People", "Cost(ms):",time_cost * 1000)
+            else:
+                for result in results:                      
+                    # print("results:",results)
+                    b = result["bbox"]
+                    cv2.rectangle(frame, (b[0], b[1]), (b[2], b[3]), (0, 0, 255), 2)
+                    cx = b[0]
+                    cy = b[1] + 12
+                    text = result["user_id"]
+                    
+                    cv2.putText(frame, text, (cx, cy), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 0))
+                    
+                    print('People is :', result["user_id"], "Cost(ms):",time_cost * 1000)
+
+            # 显示图像
+            cv2.imshow('Local Camera', frame)
+            # 按下q键退出程序
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+         # 释放资源
+        cap.release()
+        cv2.destroyAllWindows()
+```
+
+这将会对摄像头读取到的每一帧框选人脸区域，并对注册过的人脸显示识别出的名字，对未注册过的人脸显示'Unknown'。具体参见face_rec.py
