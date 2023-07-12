@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-        <title>Android Studio &mdash; SphinxDiary v1.0 文档</title>
+        <title>人脸识别 &mdash; SphinxDiary v1.0 文档</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/dist/fontawesome.css" />
       <link rel="stylesheet" type="text/css" href="../_static/dist/theme.css" />
@@ -14,6 +14,8 @@
             <link rel="index" title="索引" href="../genindex.html" />
             <link rel="search" title="搜索" href="../search.html" />
             <link rel="top" title="SphinxDiary v1.0 文档" href="#" />
+            <link rel="next" title="1.选择人脸检测模型SCRFD" href="10%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/01%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.html" />
+            <link rel="prev" title="1.导入.aar文件" href="09Android%20Studio/01Android%E4%BD%BF%E7%94%A8.html" />
     </head>
 <body>
     <script type="text/javascript" src="../_static/dist/blocking.js"></script>
@@ -57,7 +59,7 @@
 </div><div class="site-toc">
     <nav class="toc mt-3" aria-label="Main menu">
         <p class="caption" role="heading"><span class="caption-text">笔记:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-index.html">Docker</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01Docker/01Docker%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7.html">Docker新建用户</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01Docker/02Docker%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">Docker基本操作</a></li>
@@ -119,6 +121,12 @@
 <li class="toctree-l2"><a class="reference internal" href="09Android%20Studio/01Android%E4%BD%BF%E7%94%A8.html">1.导入.aar文件</a></li>
 <li class="toctree-l2"><a class="reference internal" href="09Android%20Studio/01Android%E4%BD%BF%E7%94%A8.html#app-build-gradle-dependencies">2.在app/build.gradle dependencies中加入：</a></li>
 <li class="toctree-l2"><a class="reference internal" href="09Android%20Studio/01Android%E4%BD%BF%E7%94%A8.html#id1">3.重新编译工程</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">人脸识别</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/01%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.html">1.选择人脸检测模型SCRFD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/01%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.html#arcface">2.选择人脸识别模型ArcFace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/01%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.html#usb">3.通过USB口连接摄像头模块</a></li>
 </ul>
 </li>
 </ul>
@@ -190,7 +198,7 @@
                         <nav aria-label="breadcrumb">
     <ol class="breadcrumb m-0 p-0 bg-transparent">
         <li class="breadcrumb-item"><a href="../index.html">Docs</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Android Studio</li>
+        <li class="breadcrumb-item active" aria-current="page">人脸识别</li>
     </ol>
 </nav>
                     </div>
@@ -221,8 +229,8 @@
                 <div class="row">
                     <div class="col-12 col-lg-9 order-last order-lg-first rst-content">
                         <main role="main" id="main">
-    <section id="android-studio">
-<h1>Android Studio<a class="headerlink" href="#android-studio" title="此标题的永久链接">¶</a></h1>
+    <section id="id1">
+<h1>人脸识别<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="10%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/01%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.html">1.选择人脸检测模型SCRFD</a></li>
@@ -233,7 +241,14 @@
 </section>
 
 </main>
-                        
+                        <nav aria-label="Page navigation" class="py-4 my-5 clearfix font-weight-bold border-top">
+    <a class="float-left" href="09Android%20Studio/01Android%E4%BD%BF%E7%94%A8.html" title="Previous">
+        <span aria-hidden="true">←&nbsp;</span>1.导入.aar文件
+    </a>
+    <a class="float-right" href="10%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/01%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.html" title="Next">
+        1.选择人脸检测模型SCRFD <span aria-hidden="true">&nbsp;→</span>
+    </a>
+</nav>
                     </div>
                     
                 </div>
